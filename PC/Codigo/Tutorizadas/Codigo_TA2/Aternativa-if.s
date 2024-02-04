@@ -26,5 +26,3 @@ if:
     move    $s3, $s1
 if_fin:
     # Después del if 
-
-    hola q tal
