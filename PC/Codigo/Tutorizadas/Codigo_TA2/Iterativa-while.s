@@ -4,9 +4,9 @@ suma = 0;
 std::cin >> numero;
 
 while (numero > 0) {
-  # Interior del while
-  suma += numero;
-  std::cin >> numero;
+    # Interior del while
+    suma += numero;
+    std::cin >> numero;
 }
 # Después del while
 
