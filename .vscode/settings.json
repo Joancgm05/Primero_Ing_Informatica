@@ -10,5 +10,15 @@
     "editor.linkedEditing": true,
     "breadcrumbs.enabled": false,
     "editor.stickyScroll.enabled": true,
-    "editor.cursorSmoothCaretAnimation": "on"
+    "editor.cursorSmoothCaretAnimation": "on",
+    "git.autofetch": true,
+    "editor.minimap.enabled": false,
+    "editor.overviewRulerBorder": false,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.scrollbar.vertical": "hidden",
+    "editor.guides.indentation": false,
+    "indenticator.width": 0.01,
+    "indenticator.inner.width": 0.01,
+    "indenticator.color.dark": "rgba(255,255,255,0.1)",
+    "editor.glyphMargin": false
 }
