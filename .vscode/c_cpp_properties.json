@@ -27,7 +27,7 @@
                     "/home/bluepercy/Segundo_cuatri/**",
                     "${workspaceFolder}"
                 ],
-                "limitSymbolsToIncludedHeaders": true
+                "limitSymbolsToIncludedHeaders": true 
             },
             "cStandard": "c17",
             "cppStandard": "c++17",
