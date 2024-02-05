@@ -14,7 +14,7 @@
         {
             "name": "a",
             "includePath": [
-                "/home/bluepercy/Segundo_cuatri/**"
+                "/home/joan/Segundo_cuatri/**"
             ],
             "defines": [
                 "_DEBUG",
@@ -24,7 +24,7 @@
             "mergeConfigurations": false,
             "browse": {
                 "path": [
-                    "/home/bluepercy/Segundo_cuatri/**",
+                    "/home/joan/Segundo_cuatri/**",
                     "${workspaceFolder}"
                 ],
                 "limitSymbolsToIncludedHeaders": true 
