@@ -1,3 +1,14 @@
 {
-    "C_Cpp.errorSquiggles": "enabled"
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.allowedUNCHosts": [
+        "wsl.localhost"
+    ],
+    "workbench.colorTheme": "Platzi Theme Green Mode",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.productIconTheme": "fluent-icons",
+    "editor.cursorBlinking": "expand",
+    "editor.linkedEditing": true,
+    "breadcrumbs.enabled": false,
+    "editor.stickyScroll.enabled": true,
+    "editor.cursorSmoothCaretAnimation": "on"
 }
