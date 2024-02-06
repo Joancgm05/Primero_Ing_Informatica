@@ -2,22 +2,30 @@
 #include <string>
 #include <vector>
 
-struct Equipo {
+const int n_equipos{22}; // Declaramos como constante el número de equipos de la liga
+
+/// @brief Declaramos la struct del Equipo para posteriormente crear un array del número de equipos.
+struct Equipo {                
   std::string nombre_equipo;
   int partidos_jugados;
   int partidos_ganados;
   int partidos_empatados;
 };
 
-struct Clasificación {
+/// @brief Lo mismo para esta struct
+struct Clasificacion {        
   std::string nombre_equipo;
   int puntos;
 };
 
-void Clasificación(struct Equipo liga[N_EQUIPOS], struct Equipo_Clasificación Clasificación[N_EQUIPOS]) {
-  for (int i{0}; i < N_EQUIPOS; ++i){
-    Clasificación[i].nombre_equipo = liga[i].nombre_equipo;
-    Clasificación[i].puntuacion = liga[i].partidos_ganados* 3 + liga[i].partidos_empatados;
+/// @brief Esta función copia el nombre del array Equipo al Clasificacion para posteriormente medir 
+///        a los valores del struct aqui.
+/// @param liga 
+/// @param clasificacion 
+void Clasificación(struct Equipo liga[n_equipos], struct Clasificacion clasificacion[n_equipos]) {
+  for (int i{0}; i < n_equipos; ++i){
+    clasificacion[i].nombre_equipo = liga[i].nombre_equipo;
+    clasificacion[i].puntos = liga[i].partidos_ganados* 3 + liga[i].partidos_empatados;
   }
 }
 
