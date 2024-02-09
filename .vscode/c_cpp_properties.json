@@ -14,7 +14,7 @@
             "cStandard": "c17",
             "cppStandard": "gnu++17",
             "intelliSenseMode": "linux-gcc-x64",
-            "compilerPathInCppPropertiesJson": "/usr/bin/gcc",
+            "compilerPathInCppPropertiesJson": "/usr/bin/g++",
             "mergeConfigurations": false,
             "browse": {
                 "path": [
@@ -46,7 +46,7 @@
             "cppStandard": "c++17",
             "intelliSenseMode": "linux-gcc-x64",
             "compilerPath": "/usr/bin/g++",
-            "compilerPathInCppPropertiesJson": "/usr/bin/gcc"
+            "compilerPathInCppPropertiesJson": "/usr/bin/g++"
         }
     ],
     "version": 4
