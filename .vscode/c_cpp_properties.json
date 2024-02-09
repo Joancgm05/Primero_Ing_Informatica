@@ -1,18 +1,31 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Pc",
             "includePath": [
-                "${workspaceFolder}/**"
+                "/home/joan/Segundo_cuatri/**"
             ],
-            "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "/usr/bin/g++",
             "cStandard": "c17",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "linux-gcc-x64"
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerPathInCppPropertiesJson": "/usr/bin/gcc",
+            "mergeConfigurations": false,
+            "browse": {
+                "path": [
+                    "/home/joan/Segundo_cuatri/**",
+                    "/home/joan/Segundo_cuatri"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
         },
         {
-            "name": "a",
+            "name": "Portatil",
             "includePath": [
                 "/home/joan/Segundo_cuatri/**"
             ],
@@ -25,14 +38,15 @@
             "browse": {
                 "path": [
                     "/home/joan/Segundo_cuatri/**",
-                    "${workspaceFolder}"
+                    "/home/joan/Segundo_cuatri"
                 ],
-                "limitSymbolsToIncludedHeaders": true 
+                "limitSymbolsToIncludedHeaders": true
             },
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "linux-gcc-x64",
-            "compilerPath": "/usr/bin/gcc"
+            "compilerPath": "/usr/bin/g++",
+            "compilerPathInCppPropertiesJson": "/usr/bin/gcc"
         }
     ],
     "version": 4
