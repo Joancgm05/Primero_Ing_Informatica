@@ -10,6 +10,8 @@
 
 // pauta de estilo [92]: comentarios multilínea usando solo "//"
 
+//Según la guía de estilo de google para comentar secciones enteras hay que utilizar "/* */" en lugar de "//"
+
 #pragma once
 
 #include <iostream>
