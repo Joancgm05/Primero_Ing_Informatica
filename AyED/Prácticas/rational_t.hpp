@@ -1,6 +1,6 @@
-// AUTOR: 
-// FECHA: 
-// EMAIL: 
+// AUTOR: Joan Carlos García Méndez
+// FECHA: 13/02/2024
+// EMAIL: alu0101656571@ull.edu.es
 // VERSION: 1.0
 // ASIGNATURA: Algoritmos y Estructuras de Datos
 // PRÁCTICA Nº: 1
@@ -27,18 +27,19 @@ class rational_t
 {
   // pautas de estilos [44] y [73]: primero "public" y después "private"
 public:
-  rational_t(const int = 0, const int = 1);
-  ~rational_t() {}
+  rational_t(const int = 0, const int = 1); // Constructor, parametrizado
+  ~rational_t() {} // Destructor
   
   // pauta de estilo [71]: indentación a 2 espacios
   // getters
-  int get_num() const;
-  int get_den() const;
+  int get_num() const; // Método para obtener el numerador 
+  int get_den() const; // Método para obtener el denominador 
   
   // setters
-  void set_num(const int);
-  void set_den(const int);
+  void set_num(const int); // Método para modificar el numerador 
+  void set_den(const int); // Método para modificar el denominador 
 
+  // value
   double value(void) const;
 
   // FASE II
@@ -52,10 +53,10 @@ public:
   // rational_t multiply(const rational_t&);
   // rational_t divide(const rational_t&);
   
-  void write(ostream& = cout) const;
-  void read(istream& = cin);
+  void write(ostream& = cout) const; // Método para escribir un racional mediante teclado
+  void read(istream& = cin); // Método para leer un racional 
   
 private:
   // pauta de estilo [11]: nombre de los atributos seguido de "_"
-  int num_, den_;
+  int num_, den_; // Atributos privados de la clase rational_t
 };
