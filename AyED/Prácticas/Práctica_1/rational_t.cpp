@@ -9,6 +9,7 @@
 //              https://geosoft.no/development/cppstyle.html
 
 // pauta de estilo [92]: comentarios multilínea usando solo "//"
+// Google style: Para comentar secciones enteras hay que utilizar "/* */" en lugar de "//".
 
 #include "rational_t.hpp"
 
@@ -19,8 +20,11 @@ rational_t::rational_t(const int n, const int d) // Constructor, parametrizado
 }
 
 // pauta de estilo [87]: 3 líneas de separación entre métodos
+// Google style: 1 línea de separación entre métodos.
 
 // pauta de estilo [83]: tipo retornado en línea anterior al método
+// Google style: tipo de retorno antes del método
+
 int
 rational_t::get_num() const // Obtiene el numerador 
 {
