@@ -21,41 +21,43 @@ using namespace std;
 
 int main()
 {
-  rational_t a(1, 2), b(3), c;
+  rational_t a(1, 2), b(3), c; // Declaración de 3 racionales 
 
-  cout << "a.value()= " << a.value() << endl;
-  cout << "b.value()= " << b.value() << endl;
-  cout << "c.value()= " << c.value() << endl;
-
+  cout << "a.value()= " << a.value() << endl; // Escribe el valor de a
+  cout << "b.value()= " << b.value() << endl; // Escribe el valor de b
+  cout << "c.value()= " << c.value() << endl; // Escribe el valor de c
+  // Escribe los racionales en pantalla
   cout << "a: ";
-  a.write();
+  a.write(); // Escribe el racional a 
   cout << "b: ";
-  b.write();
+  b.write(); // Escribe el racional b
 
-  c.read();
-  cout << "c: ";
-  c.write();
+  c.read(); // Lee el racional c desde el teclado
+  cout << "c: "; 
+  c.write(); // Escribe el racional c
 
   // FASE II
-  // rational_t x(1, 3), y(2, 3);
-  // x.write();
-  // y.write();
-  // cout << "x == y? " << (x.is_equal(y) ? "true" : "false") << endl;
-  // cout << "x < y? " << (x.is_greater(y) ? "true" : "false") << endl;
-  // cout << "x > y? " << (x.is_less(y) ? "true" : "false") << endl;
+  rational_t x(1, 3), y(2, 3);
+  x.write(); // Escribe el racional x
+  y.write(); // Escribe el racional y 
+  cout << "x == y? " << (x.is_equal(y) ? "true" : "false") << endl; // Compara si x es igual que y, escribe el resultado
+  cout << "x < y? " << (x.is_greater(y) ? "true" : "false") << endl; // Compara si x es menor que y, escribe el resultado
+  cout << "x > y? " << (x.is_less(y) ? "true" : "false") << endl; // Compara si x es mayor que y, escribe el resultado
+  cout << "x == 0?" << (x.is_zero() ? "true" : "false") << endl; // Compara si x es igual a 0
+  cout << "y == 0?" << (y.is_zero() ? "true" : "false") << endl; // Compara si y es igual a 0
 
   // FASE III
-  // cout << "a + b: ";
-  // a.add(b).write();
+  cout << "a + b: ";
+  a.add(b).write(); // Suma los racionaes a y b, escribe el resultado
   
-  // cout << "b - a: ";
-  // b.substract(a).write();
+  cout << "b - a: ";
+  b.substract(a).write(); // Resta los raciones a y b, escribe el resultado
 
-  // cout << "a * b: ";
-  // a.multiply(b).write();
+  cout << "a * b: ";
+  a.multiply(b).write(); // Multiplica los racionales a y b, escribe el resultado
   
-  // cout << "a / b: ";
-  // a.divide(b).write();
+  cout << "a / b: ";
+  a.divide(b).write(); // Divide los racionales a y b, escribe el resutado
   
   return 0;
 }

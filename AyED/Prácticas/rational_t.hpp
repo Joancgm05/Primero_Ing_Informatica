@@ -43,15 +43,16 @@ public:
   double value(void) const;
 
   // FASE II
-  // bool is_equal(const rational_t&, const double precision = EPSILON) const;
-  // bool is_greater(const rational_t&, const double precision = EPSILON) const;
-  // bool is_less(const rational_t&, const double precision = EPSILON) const;
+  bool is_equal(const rational_t&, const double precision = EPSILON) const; // Método para comparar dos racionales 
+  bool is_greater(const rational_t&, const double precision = EPSILON) const; // Método para comparar dos racionales  
+  bool is_less(const rational_t&, const double precision = EPSILON) const; // Método para comparar dos racionales
+  bool is_zero(const double precison = EPSILON) const; // Método para comparar racionales a 0
   
   // FASE III
-  // rational_t add(const rational_t&);
-  // rational_t substract(const rational_t&);
-  // rational_t multiply(const rational_t&);
-  // rational_t divide(const rational_t&);
+  rational_t add(const rational_t&); // Método para sumar dos racionales
+  rational_t substract(const rational_t&); // Método para restar dos racionales 
+  rational_t multiply(const rational_t&); // Método para multiplicar dos racionales 
+  rational_t divide(const rational_t&); // método para dividir dos racionales 
   
   void write(ostream& = cout) const; // Método para escribir un racional mediante teclado
   void read(istream& = cin); // Método para leer un racional 

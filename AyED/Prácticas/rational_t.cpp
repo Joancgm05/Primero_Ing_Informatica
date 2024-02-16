@@ -12,9 +12,9 @@
 
 #include "rational_t.hpp"
 
-rational_t::rational_t(const int n, const int d)
+rational_t::rational_t(const int n, const int d) // Constructor, parametrizado
 {
-  assert(d != 0);
+  assert(d != 0); // Si el denominador es igual a 0, se aborta el programa 
   num_ = n, den_ = d;
 }
 
@@ -22,96 +22,126 @@ rational_t::rational_t(const int n, const int d)
 
 // pauta de estilo [83]: tipo retornado en línea anterior al método
 int
-rational_t::get_num() const
+rational_t::get_num() const // Obtiene el numerador 
 {
-  return num_;
+  return num_; // Delvuelve el valor del denominador 
 }
 
 
 
 int
-rational_t::get_den() const
+rational_t::get_den() const // Obtiene el denominador 
 {
-  return den_;
+  return den_; // Devuelve el valor del denominador 
 }
 
 
   
 void
-rational_t::set_num(const int n)
+rational_t::set_num(const int n) // Define el numerador 
 {
-  num_ = n;
+  num_ = n; // No debuelve nada 
 }
 
 
   
 void
-rational_t::set_den(const int d)
+rational_t::set_den(const int d) // Define el denominador
 {
-  assert(d != 0);
-  den_ = d;
+  assert(d != 0); // Si el denominador el 0, aborta el programa 
+  den_ = d; // No devuelve nada 
 }
 
 
-
+// Devuelve el valor del racional como un double 
 double
-rational_t::value() const
+rational_t::value() const 
 { 
   return double(get_num()) / get_den();
 }
 
 
 // comparaciones
-//bool
-//rational_t::is_equal(const rational_t& r, const double precision) const
-//{ 
-//}
+// Compara si dos racionales son iguales 
+bool
+rational_t::is_equal(const rational_t& r, const double precision) const
+{
+  return fabs(value() - r.value()) < precision;
+}
+
+
+// Compara si un racional es mayor que otro
+bool
+rational_t::is_greater(const rational_t& r, const double precision) const
+{
+  return r.value() - value() > precision;
+}
 
 
 
-//bool
-//rational_t::is_greater(const rational_t& r, const double precision) const
-//{
-//}
+bool
+rational_t::is_less(const rational_t& r, const double precision) const
+{
+  return value() - r.value() > precision;
+}
 
 
 
-//bool
-//rational_t::is_less(const rational_t& r, const double precision) const
-//{
-//}
+bool
+rational_t::is_zero(const double precision) const
+{
+  return fabs(value()) < precision;
+}
+
 
 
 // operaciones
-//rational_t
-//rational_t::add(const rational_t& r)
-//{
-//}
+// Se suman dos racionales y se devuelve el resultado 
+rational_t
+rational_t::add(const rational_t& r)
+{
+  double num = (get_num() * r.get_den()) + (get_den() * r.get_num());
+  double den = get_den() * r.get_den();
+  return rational_t(num, den);
+}
 
 
 
-//rational_t
-//rational_t::substract(const rational_t& r)
-//{
-//}
+// Se restan dos racionales y se devuelve el resultado 
+rational_t
+rational_t::substract(const rational_t& r)
+{
+  double num = (get_num() * r.get_den()) - (get_den() * r.get_num());
+  double den = get_den() * r.get_den();
+  return rational_t(num, den);
+}
 
 
 
-//rational_t
-//rational_t::multiply(const rational_t& r)
-//{
-//}
+// Se multiplican dos racionales y se devuelve el resultado
+rational_t
+rational_t::multiply(const rational_t& r)
+{
+  double num = get_num() * r.get_num();
+  double den = get_den() * r.get_den();
+  return rational_t(num, den);
+}
 
 
 
-//rational_t
-//rational_t::divide(const rational_t& r)
-//{
-//}
+// Se dividen dos racionales y se devuelve el resultadog
+rational_t
+rational_t::divide(const rational_t& r) 
+{
+  double num = get_num() * r.get_den();
+  double den = get_den() * r.get_num();
+  return rational_t(num, den);
+}
 
 
 
 // E/S
+// Escribe un racional en el flujo de salida 
 void
 rational_t::write(ostream& os) const
 {
@@ -119,7 +149,7 @@ rational_t::write(ostream& os) const
 }
 
 
-
+// Lee un racional desde el flujo de salida 
 void 
 rational_t::read(istream& is)
 {
