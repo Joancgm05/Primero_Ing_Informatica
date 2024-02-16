@@ -3,28 +3,14 @@
 #include <iostream>
 
 class A {
-  private: 
-    int i;
-
-  protected: 
-    int j;
-
-  public: 
-    int getI() 
-    { 
-      return i; 
-    }
+  private: int i;
+  protected: int j;
+  public: int getI() { return i; }
 };
 
 class B: public A {
-  private: 
-    int k;
-
-  public: 
-    int getJ() 
-    { 
-      return j; 
-    }
+  private: int k;
+  public: int getJ() { return j; }
 };
 
 int main() {
