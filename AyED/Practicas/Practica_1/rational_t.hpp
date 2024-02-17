@@ -44,7 +44,7 @@ public:
   void set_den(const double); // Método para modificar el denominador.
 
   // value
-  double value(void) const;
+  double value(void) const; // Método para calcular el valor del racional.
 
   // FASE II
   bool is_equal(const rational_t&, const double precision = EPSILON) const; // Método para comparar dos racionales.

@@ -163,7 +163,7 @@ rational_t::write(ostream& os) const
 }
 
 
-// Escribe el denominador commo la raiz de su valor.
+// Escribe el denominador como la raiz de su valor en el flujo de salida.
 void 
 rational_t::write_root(ostream& os) const
 {
