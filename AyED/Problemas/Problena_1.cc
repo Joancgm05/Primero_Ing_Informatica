@@ -29,7 +29,8 @@ void Clasificación(struct Equipo liga[n_equipos], struct Clasificacion clasific
   }
 }
 
+
 int main() {
-  struct Equipo Liga[22];
+  struct Equipo liga[22];
   return 0;
 }
