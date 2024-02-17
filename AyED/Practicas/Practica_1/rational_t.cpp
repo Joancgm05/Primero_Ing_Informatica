@@ -8,56 +8,56 @@
 //              "C++ Programming Style Guidelines"
 //              https://geosoft.no/development/cppstyle.html
 
-// pauta de estilo [92]: comentarios multilínea usando solo "//"
+// pauta de estilo [92]: comentarios multilínea usando solo "//".
 // Google style: Para comentar secciones enteras hay que utilizar "/* */" en lugar de "//".
 
 #include "rational_t.hpp"
 
-rational_t::rational_t(const int n, const int d) // Constructor, parametrizado
+rational_t::rational_t(const double n, const double d) // Constructor, parametrizado.
 {
-  assert(d != 0); // Si el denominador es igual a 0, se aborta el programa 
+  assert(d != 0); // Si el denominador es igual a 0, se aborta el programa.
   num_ = n, den_ = d;
 }
 
-// pauta de estilo [87]: 3 líneas de separación entre métodos
+// pauta de estilo [87]: 3 líneas de separación entre métodos.
 // Google style: 1 línea de separación entre métodos.
 
-// pauta de estilo [83]: tipo retornado en línea anterior al método
-// Google style: tipo de retorno antes del método
+// pauta de estilo [83]: tipo retornado en línea anterior al método.
+// Google style: tipo de retorno antes del método.
 
-int
-rational_t::get_num() const // Obtiene el numerador 
+double
+rational_t::get_num() const // Obtiene el numerador.
 {
-  return num_; // Delvuelve el valor del denominador 
+  return num_; // Delvuelve el valor del denominador.
 }
 
 
 
-int
-rational_t::get_den() const // Obtiene el denominador 
+double
+rational_t::get_den() const // Obtiene el denominador.
 {
-  return den_; // Devuelve el valor del denominador 
-}
-
-
-  
-void
-rational_t::set_num(const int n) // Define el numerador 
-{
-  num_ = n; // No debuelve nada 
+  return den_; // Devuelve el valor del denominador.
 }
 
 
   
 void
-rational_t::set_den(const int d) // Define el denominador
+rational_t::set_num(const double n) // Define el numerador.
 {
-  assert(d != 0); // Si el denominador el 0, aborta el programa 
-  den_ = d; // No devuelve nada 
+  num_ = n; // No debuelve nada.
 }
 
 
-// Devuelve el valor del racional como un double 
+  
+void
+rational_t::set_den(const double d) // Define el denominador.
+{
+  assert(d != 0); // Si el denominador el 0, aborta el programa.
+  den_ = d; // No devuelve nada.
+}
+
+
+// Devuelve el valor del racional como un double.
 double
 rational_t::value() const 
 { 
@@ -65,8 +65,8 @@ rational_t::value() const
 }
 
 
-// comparaciones
-// Compara si dos racionales son iguales 
+// Comparaciones.
+// Compara si dos racionales son iguales.
 bool
 rational_t::is_equal(const rational_t& r, const double precision) const
 {
@@ -74,7 +74,7 @@ rational_t::is_equal(const rational_t& r, const double precision) const
 }
 
 
-// Compara si un racional es mayor que otro
+// Compara si un racional es mayor que otro.
 bool
 rational_t::is_greater(const rational_t& r, const double precision) const
 {
@@ -82,7 +82,7 @@ rational_t::is_greater(const rational_t& r, const double precision) const
 }
 
 
-
+// Compara si un racional es menor que otro.
 bool
 rational_t::is_less(const rational_t& r, const double precision) const
 {
@@ -90,7 +90,7 @@ rational_t::is_less(const rational_t& r, const double precision) const
 }
 
 
-
+// Compara si un racional es igual a 0.
 bool
 rational_t::is_zero(const double precision) const
 {
@@ -100,7 +100,7 @@ rational_t::is_zero(const double precision) const
 
 
 // operaciones
-// Se suman dos racionales y se devuelve el resultado 
+// Se suman dos racionales y se devuelve el resultado.
 rational_t
 rational_t::add(const rational_t& r)
 {
@@ -111,7 +111,7 @@ rational_t::add(const rational_t& r)
 
 
 
-// Se restan dos racionales y se devuelve el resultado 
+// Se restan dos racionales y se devuelve el resultado.
 rational_t
 rational_t::substract(const rational_t& r)
 {
@@ -122,7 +122,7 @@ rational_t::substract(const rational_t& r)
 
 
 
-// Se multiplican dos racionales y se devuelve el resultado
+// Se multiplican dos racionales y se devuelve el resultado.
 rational_t
 rational_t::multiply(const rational_t& r)
 {
@@ -133,7 +133,7 @@ rational_t::multiply(const rational_t& r)
 
 
 
-// Se dividen dos racionales y se devuelve el resultadog
+// Se dividen dos racionales y se devuelve el resultado.
 rational_t
 rational_t::divide(const rational_t& r) 
 {
@@ -143,9 +143,19 @@ rational_t::divide(const rational_t& r)
 }
 
 
+// Se hace la raíz cuadrada del denominador.
+rational_t
+rational_t::root()
+{
+  double num = get_num();
+  double den = sqrt(get_den());
+  return rational_t(num, den);
+}
+
+
 
 // E/S
-// Escribe un racional en el flujo de salida 
+// Escribe un racional en el flujo de salida.
 void
 rational_t::write(ostream& os) const
 {
@@ -153,7 +163,16 @@ rational_t::write(ostream& os) const
 }
 
 
-// Lee un racional desde el flujo de salida 
+// Escribe el denominador commo la raiz de su valor.
+void 
+rational_t::write_root(ostream& os) const
+{
+  os << get_num() << "/" << "√" << get_den() * get_den() << "=" << value() << endl;
+}
+
+
+
+// Lee un racional desde el flujo de salida.
 void 
 rational_t::read(istream& is)
 {

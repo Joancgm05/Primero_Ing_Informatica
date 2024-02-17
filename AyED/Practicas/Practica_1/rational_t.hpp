@@ -30,18 +30,18 @@ class rational_t
   // Google style: primero "public", segundo "protected" y tercero "private".
 
 public:
-  rational_t(const int = 0, const int = 1); // Constructor, parametrizado.
+  rational_t(const double = 0, const double = 1); // Constructor, parametrizado.
   ~rational_t() {} // Destructor
   
   // pauta de estilo [71]: indentación a 2 espacios
   // Google style: sangría a dos espacios.
   // getters
-  int get_num() const; // Método para obtener el numerador.
-  int get_den() const; // Método para obtener el denominador. 
+  double get_num() const; // Método para obtener el numerador.
+  double get_den() const; // Método para obtener el denominador. 
   
   // setters
-  void set_num(const int); // Método para modificar el numerador.
-  void set_den(const int); // Método para modificar el denominador.
+  void set_num(const double); // Método para modificar el numerador.
+  void set_den(const double); // Método para modificar el denominador.
 
   // value
   double value(void) const;
@@ -57,12 +57,14 @@ public:
   rational_t substract(const rational_t&); // Método para restar dos racionales. 
   rational_t multiply(const rational_t&); // Método para multiplicar dos racionales. 
   rational_t divide(const rational_t&); // método para dividir dos racionales.
+  rational_t root(); // Método para calcular la raíz cuadrada del denominador de un racional.
   
   void write(ostream& = cout) const; // Método para escribir un racional mediante teclado.
+  void write_root(ostream& = cout) const; // Método para escribir un racional con cuyo a su denominador se le aplica una raiz cuaddrada.
   void read(istream& = cin); // Método para leer un racional.
 
 private:
   // pauta de estilo [11]: nombre de los atributos seguido de "_"
   // Google style: nombre de los atributos seguido de "_".
-  int num_, den_; // Atributos privados de la clase rational_t
+  double num_, den_; // Atributos privados de la clase rational_t
 };
