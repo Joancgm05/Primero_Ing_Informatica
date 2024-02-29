@@ -14,8 +14,8 @@
 
 rational_t::rational_t(const int n, const int d)
 {
-  assert(d != 0);
-  num_ = n, den_ = d;
+  assert(d != 0); // Comprueba que el denominador no sea 0
+  num_ = n, den_ = d; // Asigna el numerador y el denominador
 }
 
 // pauta de estilo [87]: 3 líneas de separación entre métodos
@@ -23,7 +23,7 @@ rational_t::rational_t(const int n, const int d)
 // pauta de estilo [83]: tipo retornado en línea anterior al método
 inline
 int
-rational_t::get_num() const
+rational_t::get_num() const // Obtiene el numerador
 {
   return num_;
 }
@@ -32,7 +32,7 @@ rational_t::get_num() const
 
 inline
 int
-rational_t::get_den() const
+rational_t::get_den() const // Obtiene el denominador
 {
   return den_;
 }
@@ -40,25 +40,25 @@ rational_t::get_den() const
 
   
 void
-rational_t::set_num(const int n)
+rational_t::set_num(const int n) // Asigna el numerador
 {
-  num_ = n;
+  num_ = n; // Asigna el numerador 
 }
 
 
   
 void
-rational_t::set_den(const int d)
+rational_t::set_den(const int d) // Asigna el denominador
 {
-  assert(d != 0);
-  den_ = d;
+  assert(d != 0); // Comprueba que el denominador no sea 0
+  den_ = d; // Asigna el denominador
 }
 
 
 
 inline
 double
-rational_t::value() const
+rational_t::value() const // Devuelve el valor del racional
 { 
   return double(get_num()) / get_den();
 }
@@ -66,7 +66,7 @@ rational_t::value() const
 
 
 rational_t 
-rational_t::opposite() const
+rational_t::opposite() const // Devuelve el racional opuesto
 { 
   return rational_t((-1)*get_num(), get_den());
 }
@@ -74,7 +74,7 @@ rational_t::opposite() const
 
 
 rational_t
-rational_t::reciprocal() const
+rational_t::reciprocal() const // Devuelve el racional reciproco
 { 
   return rational_t(get_den(), get_num());
 }
@@ -83,7 +83,7 @@ rational_t::reciprocal() const
 
 // comparaciones
 bool
-rational_t::is_equal(const rational_t& r, const double precision) const
+rational_t::is_equal(const rational_t& r, const double precision) const // Compara si dos números racionales son iguales
 { 
   return fabs(value() - r.value()) < precision;
 }
@@ -91,7 +91,7 @@ rational_t::is_equal(const rational_t& r, const double precision) const
 
 
 bool
-rational_t::is_greater(const rational_t& r, const double precision) const
+rational_t::is_greater(const rational_t& r, const double precision) const // Compara si el número racional es mayor que otro
 {
   return (value() - r.value()) > precision;
 }
@@ -99,7 +99,7 @@ rational_t::is_greater(const rational_t& r, const double precision) const
 
 
 bool
-rational_t::is_less(const rational_t& r, const double precision) const
+rational_t::is_less(const rational_t& r, const double precision) const // Compara si el número racional es menor que otro
 {
   return r.is_greater(*this, precision);
 }
@@ -107,7 +107,7 @@ rational_t::is_less(const rational_t& r, const double precision) const
 
 // operaciones
 rational_t
-rational_t::add(const rational_t& r) const
+rational_t::add(const rational_t& r) const // Se suman dos racionales y se devuelve el resultado.
 {
   return rational_t(get_num() * r.get_den() + get_den() * r.get_num(), 
                     get_den() * r.get_den());
@@ -116,7 +116,7 @@ rational_t::add(const rational_t& r) const
 
 
 rational_t
-rational_t::substract(const rational_t& r) const
+rational_t::substract(const rational_t& r) const // Se restan dos racionales y se devuelve el resultado.
 {
   return add(r.opposite());
 }
@@ -124,7 +124,7 @@ rational_t::substract(const rational_t& r) const
 
 
 rational_t
-rational_t::multiply(const rational_t& r) const
+rational_t::multiply(const rational_t& r) const // Se multiplican dos racionales y se devuelve el resultado.
 {
   return rational_t(get_num() * r.get_num(), get_den() * r.get_den());
 }
@@ -132,54 +132,56 @@ rational_t::multiply(const rational_t& r) const
 
 
 rational_t
-rational_t::divide(const rational_t& r) const
+rational_t::divide(const rational_t& r) const // Se dividen dos racionales y se devuelve el resultado.
 {
   return multiply(r.reciprocal());
 }
 
 
 // FASE I: operadores
+// Sobrecarga del operador de suma
 rational_t
-operator+(const rational_t& a, const rational_t& b)
+operator+(const rational_t& a, const rational_t& b) 
 {
-  // rellenar código
+  return a.add(b);
 }
 
 
-
+// Sobrecarga del operador de resta
 rational_t
 operator-(const rational_t& a, const rational_t& b)
 {
-  // rellenar código
+  return a + b.opposite();
 }
 
 
-
+// Sobrecarga del operador de multiplicación
 rational_t
 operator*(const rational_t& a, const rational_t& b)
 {
-  // rellenar código
+  return a.multiply(b);
 }
 
 
-
+// Sobrecarga del operador de división
 rational_t
 operator/(const rational_t& a, const rational_t& b)
 {
-  // rellenar código
+  return a.divide(b);
 }
 
 
 
 // E/S
+// Escribir el número racional y su valor
 void
 rational_t::write(ostream& os) const
 {
-  os << get_num() << "/" << get_den() << "=" << value() << endl;
+  os << get_num() << "/" << get_den() << "=" << value() << endl; 
 }
 
 
-
+// Lee un racional desde el flujo de salida.
 void
 rational_t::read(istream& is)
 {
@@ -188,7 +190,7 @@ rational_t::read(istream& is)
 }
 
 
-
+// Sobrecarga del operador de salida
 ostream&
 operator<<(ostream& os, const rational_t& r)
 {
@@ -196,7 +198,7 @@ operator<<(ostream& os, const rational_t& r)
   return os;
 }
 
-
+// Sobrecarga del operador de entrada 
 istream&
 operator>>(istream& is, rational_t& r)
 {
