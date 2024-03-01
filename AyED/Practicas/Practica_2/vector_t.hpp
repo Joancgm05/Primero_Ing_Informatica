@@ -55,7 +55,8 @@ private:
 
 template<class T>
 vector_t<T>::vector_t(const int n) // Constructor
-{ sz_ = n; // Tamaño del vector
+{ 
+  sz_ = n; // Tamaño del vector
   build(); // Llamada al método build
 }
 

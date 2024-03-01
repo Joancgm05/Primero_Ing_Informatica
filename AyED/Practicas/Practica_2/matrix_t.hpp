@@ -58,7 +58,7 @@ matrix_t<T>::matrix_t(const int m, const int n) // Constructor
 { 
   m_ = m; // Asigna el número de filas
   n_ = n; // Asigna el número de columnas
-  v_.resize(m_ * n_); // Redimensiona el vector
+  v_.resize(m_ * n_); // Redimensiona la matriz
 }
 
 
