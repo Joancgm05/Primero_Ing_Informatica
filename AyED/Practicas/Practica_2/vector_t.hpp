@@ -220,3 +220,22 @@ scal_prod(const vector_t<rational_t>& v, const vector_t<rational_t>& w)
   }
   return producto_escalar; // Devuelve el producto escalar
 }
+
+
+template<class T>
+T
+circular_vect(const vector_t<T>& z) // Vector  circular
+{
+  int vector_circular[z.get_size()]; // Crea un vector auxiliar 
+  for (int i{0}; i <= z.get_size(); ++i) { // Recorre eñ vector 
+    vector_circular[i] = z[i]; // Copia el vector en un array auxiliar
+    
+    if (i == z.get_size()) { // si i es igual al tamaño del vector 
+      z[i] = vector_circular[i] - (z.get_size() + 1); // se almacena en el vector auxiliar el último elemento del vector
+
+    } else { // si i toma cualquier otro valor 
+      z[i] = vector_circular[i] + 1; // Se rueda una posición a la derecha
+    }
+  }
+  return at(z); //  Devuelve el vector circular
+}

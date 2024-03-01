@@ -54,7 +54,11 @@ int main()
   y.read(), y.write();
   
   cout << "Producto escalar de vector_t<rational_t>: " << scal_prod(x, y) << endl << endl; // Se muestra por pantalla el producto escalar de los vectores
-  
+
+  vector_t<double> z;
+  z.read(), z.write();
+
+  cout << "El vector circular de vector_t<rational>: " << circular_vect(z) << endl << endl;
   
   // FASE III
   matrix_t<double> A, B, C; // Se crean matrices de tipo double
