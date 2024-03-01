@@ -183,13 +183,13 @@ template<class T>
 void
 matrix_t<T>::multiply(const matrix_t<T>& A, const matrix_t<T>& B) // Multiplica dos matrices
 {
-  assert (A.get_n() == B.get_m()); // Compruba que las columnas de A coinciden con la filas de B
-  matrix_t C{A.get_n(), B.get_m()}; // Crea una matriz tamaño(C) con las columnas de A y las filas de B
-  resize(A.get_m(), B.get_n()); // Redimenciona la matriz con el número de columnas de A y eñ número de filas de B
-  for (int i{0}; i < A.get_m(), ++i) 
-    for (int j{0}; j < B.get_n(); ++j){
-      at(i, j) = 0;
-      for (int k = 1; k < B.get_m(); ++k)
-        at(i, j) = (i, j) + (A(i, k) * B (k,j));
+  assert (A.get_n() == B.get_m()); // Comprueba que el número de columnas de A es igual al número de filas de B
+  matrix_t C{A.get_n(), B.get_m()}; // Crea una matriz de tamaño (filas de A, columnas de B)
+  resize(A.get_m(), B.get_n()); // Redimensiona la matriz
+  for (int i{1}; i <= A.get_m();i++)
+    for (int j{1}; j <= B.get_n(); j++){
+      at(i,j) = 0;
+      for(int k{1}; k <= B.get_m(); k++)
+        at(i,j) = at(i,j) + (A(i,k)*B(k,j));
     }
 }
