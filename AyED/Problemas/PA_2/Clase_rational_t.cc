@@ -11,8 +11,8 @@ public:
   ~rational_t(); // Destructor
 
   // Getters
-  int get_n() const { return num; }
-  int get_d() const { return den; }
+  int get_n() const { return num; } // Método para obtener el numerador
+  int get_d() const { return den; } // Méotdo para obtener el denominador
 
   void write(void); // Escribe el racional
 
