@@ -1,3 +1,4 @@
+// Programa que calcula la matriz triangukar inferior
 #include <iostream>
 
 using namespace std;
