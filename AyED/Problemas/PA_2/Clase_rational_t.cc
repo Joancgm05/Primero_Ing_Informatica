@@ -62,11 +62,12 @@ rational_t rational_t::multiply(const rational_t &r) {
 
 // Implementación del método que divide dos racionales
 rational_t rational_t::divide(const rational_t &r) {
-  int numerador{get_n() * r.get_d()};
-  int denominador{get_d() * r.get_n()};
-  return rational_t (numerador, denominador);
+  int numerador{get_n() * r.get_d()}; // Se calcula el numerador de la divisón de los dos racionales
+  int denominador{get_d() * r.get_n()}; // Se calcula el denominador de la divisón de los dos racionales 
+  return rational_t (numerador, denominador); // Se devuelbe la división de los racionales
 }
 
+// Implementación del Atributo privado para calcular el máximo común divisor 
 int rational_t::gcd(int a, int b) {
   if (b == 0)
     return a;
