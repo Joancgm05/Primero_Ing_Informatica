@@ -1,3 +1,4 @@
+// Programa que calcula si la matriz es simétrica
 #include <iostream>
 
 using namespace std;
