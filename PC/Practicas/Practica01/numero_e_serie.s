@@ -77,9 +77,6 @@ do:
 	# std::cin >> error;
 	li 			$v0, 7			# $v0=7 funcion read double
 	syscall
-	#mtc1		$v0, $f0 		# copia cruda $f0=$v0
-	#cvt.d.w		$f2, $f0   		# se almacena la copia cruda en doble precision
-	#mov.d 	 	$f20, $f2  		# se mueve el valor de $f2 a $f22
 	mov.d 		$f20, $f0
 
 	# if (!(error >= 0.00001 && error < 1))
