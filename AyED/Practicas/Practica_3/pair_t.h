@@ -14,7 +14,8 @@
 #include <iostream>
 
 
-template<class T> class pair_t {
+template<class T> 
+class pair_t {
  public:
   // constructores
   pair_t(void); // constructor por defecto 
