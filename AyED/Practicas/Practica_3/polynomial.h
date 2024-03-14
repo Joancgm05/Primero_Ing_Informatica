@@ -1,6 +1,6 @@
-// AUTOR: 
-// FECHA: 
-// EMAIL: 
+// AUTOR: Joan Carlos García Méndez 
+// FECHA: 13/03/2024
+// EMAIL: alu0101656571@ull.edu.es 
 // VERSION: 1.0
 // ASIGNATURA: Algoritmos y Estructuras de Datos
 // PRÁCTICA Nº: 3
