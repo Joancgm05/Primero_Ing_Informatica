@@ -91,5 +91,11 @@ int main()
   cout << "sp3 == p2? " << (sp3.IsEqual(p2) ? "true" : "false") << endl;
   cout << endl;
 
+  // Modificación hora de clase
+
+  cout << sp1.SumOfGrades(sp1) << endl;
+  cout << sp2.SumOfGrades(sp2) << endl;
+  cout << sp3.SumOfGrades(sp3) << endl;
+
   return 0;
 }
