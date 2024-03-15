@@ -91,13 +91,13 @@ double Polynomial::Eval(const double x) const {
 bool Polynomial::IsEqual(const Polynomial& pol, const double eps) const {
   bool differents = false;
   // poner el código aquí
-  if (get_size() != pol.get_size()) {// si los tamaños son distintos
-    differents = true; // son distintos
-  } else {
-    for (int i{0}; i < get_size(); i++) // recorre el polinomio
-      if (fabs(at(i) - pol.at(i)) > eps) // si los valores son distintos
-  return !differents;
+  // Comprobar si el tamaño de los vectores es igual
+  if (get_size() != pol.get_size()) { return differents; }
+  // Comprobar si los valores de los vectores son iguales
+  for (int i{0}; i < get_size(); i++){
+    if (fabs(get_val(i) - pol.get_val(i)) > eps) { return differents; }
   }
+  return !differents;
 }
 
 // constructor de copia
@@ -154,12 +154,7 @@ bool SparsePolynomial::IsEqual(const SparsePolynomial& spol, const double eps) c
 bool SparsePolynomial::IsEqual(const Polynomial& pol, const double eps) const {
   bool differents = false;
   // poner el código aquí
-  if (get_n() != pol.get_size()) { return differents; } // Comprobar si el tamaño de los vectores es igual
-  for (int i{0}; i < get_nz(); i++){ // recorre el polinomio
-    if (at(i).get_inx() != i){ differents = true; } // Comprobar si el valor de los índices son iguales
-    if (fabs(at(i).get_val() - pol.at(i)) >= eps){ differents = true; } // Comprobar si los valores son iguales
-  }
-  return !differents;
+  return IsEqual(SparsePolynomial(pol));
 }
 
 
