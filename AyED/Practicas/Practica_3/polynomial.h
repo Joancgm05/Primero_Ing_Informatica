@@ -57,8 +57,8 @@ class SparsePolynomial : public sparse_vector_t {
 
 
   // Modificaciones de clase
-  int WriteSumOfGrades() const; // escribe la suma de los grados de los polinomios
   int SumOfGrades(const SparsePolynomial&) const; // suma de los grados de los polinomios
+
 };
 
 // E/S
@@ -162,23 +162,20 @@ bool SparsePolynomial::IsEqual(const Polynomial& pol, const double eps) const {
   return IsEqual(SparsePolynomial(pol));
 }
 
-
-
-
 // Modificaciones de clase
 
 // Método que suma los grados de los polinomios
 int SparsePolynomial::SumOfGrades(const SparsePolynomial& z) const {
-  int sumofgrades{0};
-  for (int i{0}; i < get_nz(); ++i) {
-    sumofgrades += at(i).get_inx();
-    if (i < get_nz() - 1) {
-      std::cout << at(i).get_inx() << " + ";
-    } else {
-      std::cout << at(i).get_inx() << " = ";
+  int sumofgrades{0}; // se inicializa la variable que almacena la suma de los grados a cero
+  for (int i{0}; i < get_nz(); ++i) { // Se recorre el polinomio
+    sumofgrades += at(i).get_inx(); // Se suma el grado del polinomio
+    if (i < get_nz() - 1) { // Si no es el último elemento
+      std::cout << at(i).get_inx() << " + "; // se imprime el grado del polinomio seguido por un "+"
+    } else { // Si es el último elemento
+      std::cout << at(i).get_inx() << " = "; // se imprime el grado del polinomio seguido por un "="
     }
   }
-  return sumofgrades;
+  return sumofgrades; // se devuelve la suma de los grados
 }
 
 #endif  // POLYNOMIAL_H_
