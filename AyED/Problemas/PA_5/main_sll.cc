@@ -13,16 +13,15 @@
 
 #include "sll_t.h"
 
-#define N_CHARS 26
-
 using namespace std;
 
 int main(void)
 {
+  const int n_chars{26};
   sll_t<char> lista;
 
-  // Inserción de N_CHARS elementos ('a', 'b, 'c' ...) a la lista por el frente
-  for (int i = 0; i < N_CHARS; i++)
+  // Inserción de n_chars elementos ('a', 'b, 'c' ...) a la lista por el frente
+  for (int i = 0; i < n_chars; i++)
     lista.push_front(new sll_node_t<char>('a' + i));
 
   // Impresión de la lista elemento a elemento
@@ -64,12 +63,66 @@ int main(void)
 
   // Extracción del elemento siguiente al de valor 'n' localizado anteriormente
   nodo = lista.erase_after(nodo);
+  dato = nodo->get_data();
   delete nodo;
-  cout << "Se ha extraído la letra 'm'" << endl;
+  cout << "Se ha extraído la letra '" << dato << "'" << endl;
 
   // Impresión de la lista elemento a elemento
   lista.write(cout);
-  cout << endl;	
+  cout << endl;
 
+  // Eliminar y liberar el último elemento de una lista, devolviendo el dato
+  dato = lista.remove_last();
+  cout << "Se ha extraído la última letra '" << dato << "'" << endl;
+  lista.write(cout);
+  cout << endl;
+
+  // Intercambiar el orden del elemento primero y segundo de una lista
+  lista.swap12();
+  cout << "Se ha intercambiado primero y segundo de la lista" << endl;
+  lista.write(cout);
+  cout << endl;
+
+  // Duplicar todos los elementos de una lista insertardo las copias seguidas
+  // de los originales
+  lista.duplicate();
+  cout << "Se han duplicado los elementos de la lista" << endl;
+  lista.write(cout);
+  cout << endl;
+
+  // Eliminar y liberar todos los elementos de posiciones pares de una lista
+  lista.erase_evens();
+  cout << "Se han eliminado los elementos pares de la lista" << endl;
+  lista.write(cout);
+  cout << endl;
+  lista.erase_evens();
+  cout << "Se han vuelto a eliminar los elementos pares de la lista" << endl;
+  lista.write(cout);
+  cout << endl;
+
+  // Eliminar los nodos de posiciones impares de una lista trasladándolos
+  // en orden inverso a una nueva lista
+  sll_t<char> lista_impares = lista.move_odds();
+  cout << "Se han movido los elementos impares de la lista" << endl;
+  cout << "lista de impares: ";
+  lista_impares.write(cout);
+  cout << endl;
+  cout << "lista original: ";
+  lista.write(cout);
+  cout << endl;
+  sll_t<char> lista_impares2 = lista_impares.move_odds();
+  cout << "Se han movido los elementos impares de la lista de impares" << endl;
+  cout << "lista de impares2: ";
+  lista_impares2.write(cout);
+  cout << endl;
+  cout << "lista impares: ";
+  lista_impares.write(cout);
+  cout << endl;
+  
   return 0;
 }
+
+
+
+
+

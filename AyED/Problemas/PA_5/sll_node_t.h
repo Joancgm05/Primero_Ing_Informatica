@@ -13,7 +13,8 @@
 #include <iostream>
 
 // Clase para nodos de listas enlazadas
-template <class T> class sll_node_t {
+template <class T> 
+class sll_node_t {
  public:
   // constructores
   sll_node_t(void) : data_(), next_(NULL) {}  // constructor por defecto
