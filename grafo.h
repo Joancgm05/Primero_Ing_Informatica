@@ -53,13 +53,11 @@ public:
      void Mostrar_Matriz(); //Muestra la matriz de adyacencia: nodos y costes
      void RecorridoProfundidad(); //Construye un recorrido en profundidad desde un nodo inicial
      void RecorridoAmplitud(); //Construye un recorrido en amplitud desde un nodo inicial
+		 unsigned get_N() {return n;}
+		 unsigned get_m() {return m;}
+		 unsigned get_dirigido() {return dirigido;}
+		 void MostrarCamino(int s, int i, vector<unsigned>& pred);
      ~GRAFO(); //Destructor del objeto grafo
-
-	 // Modificaciones
-	 unsigned get_dirigido() {return dirigido;} // Devuelve si el grafo es dirigido o no
-	 unsigned get_n() {return n;} // Devuelve el numero de nodos
-	 unsigned get_m() {return m;} // Devuelve el numero de arcos
-	 void MostrarCamino(int s, int i, vector<unsigned>& pred); // Muestra el camino entre dos nodos	
 };
 
 #endif
