@@ -158,4 +158,16 @@ template <class T> std::ostream& dll_t<T>::write(std::ostream& os) const {
   return os;
 }
 
+// insertar un nodo despues de otro por parametros
+template <class T> void insert_after(dll_node_t<T>* nodo, dll_node_t<T>* nodo2) {
+  assert(nodo != NULL);
+  assert(nodo2 != NULL);
+
+  nodo->set_next(nodo2->get_next());
+  nodo->set_prev(nodo2);
+  if (nodo2->get_next() != NULL)
+    nodo2->get_next()->set_prev(nodo);
+  nodo2->set_next(nodo);
+}
+
 #endif  // DLLT_H_
