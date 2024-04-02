@@ -22,6 +22,7 @@
     "indenticator.color.dark": "rgba(255,255,255,0.1)",
     "editor.glyphMargin": false,
     "files.associations": {
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "iostream": "cpp"
     }
 }

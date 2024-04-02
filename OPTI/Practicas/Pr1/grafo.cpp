@@ -8,25 +8,20 @@
 
 #include "grafo.h"
 
-void GRAFO :: destroy()
-{
-	for (unsigned i=0; i< n; i++)
-    {
-		LS[i].clear();
-		A[i].clear();
-		if (dirigido == 1)
-        {
-            LP[i].clear();
-        };
-	}
-	LS.clear();
-	LP.clear();
-	A.clear();
-
+void GRAFO::destroy() {
+  for (unsigned i=0; i< n; i++) {
+	LS[i].clear();
+	A[i].clear();
+	if (dirigido == 1) {
+      LP[i].clear();
+    };
+  }
+  LS.clear();
+  LP.clear();
+  A.clear();
 }
 
-void GRAFO :: build (char nombrefichero[85], int &errorapertura)
-{
+void GRAFO::build (char nombrefichero[85], int &errorapertura) {
   ElementoLista dummy;
   ifstream textfile;
   textfile.open(nombrefichero);
@@ -36,63 +31,58 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura)
 	textfile >> (unsigned &) n >> (unsigned &) m >> (unsigned &) dirigido;
 	// los nodos internamente se numeran desde 0 a n-1
 	// creamos las n listas de sucesores
-	LS.resize(n);
-    if (dirigido == 1) {
+	LS.resize(n); 
+    A.resize(n);
+    if (dirigido == 1) { // Con n nodos, la primera dimensión de LS y LP tiene que tener n espacios
       LP.resize(n);
     }
     // leemos los m arcos
     for (k = 0; k < m; k++) {
       textfile >> (unsigned &) i  >> (unsigned &) j >> (int &) dummy.c;
 	  //damos los valores a dummy.j y dummy.c
-      //situamos en la posici�n del nodo i a dummy mediante push_back
+      //situamos en la posición del nodo i a dummy mediante push_back
       //pendiente de hacer un segundo push_back si es no dirigido. O no.
-	  //pendiente la construcci�n de LP, si es dirigido
+	  //pendiente la construcción de LP, si es dirigido
       //pendiente del valor a devolver en errorapertura
       //...
       dummy.j = j - 1; // restamos 1 para que los nodos estén en la posición correcta
-      if (dirigido == 0) { // Si el grafo no es dirigido
+      if (dirigido == 0) { // Si el grafo no es dirigido, solo trabajamos con LS
         LS[i - 1].emplace_back(dummy); // Colocamos el nodo al que apunta y el coste del arco de cada nodo
+        dummy.j = i - 1; // Asignamos el nodo predecesor
         if (i - 1 != j - 1) { // Si el nodo no apunta a sí mismo
-          dummy.j = i - 1; // Asignamos el nodo predecesor
           LS[j - 1].emplace_back(dummy); // Colocamos el nodo al que apunta y el coste del arco de cada nodo
         } // Dado que es un grafo no dirigido
-      } else if (dirigido == 1) {
-          LS[i - 1].emplace_back(dummy); // Colocamos el nodo al que apunta y el coste del arco de cada nodo
-          dummy.j = i - 1; // Asignamos el nodo predecesor
-          LP[j - 1].emplace_back(dummy); // Colocamos el nodo al que apunta y el coste del arco de cada nodo
+      } 
+      if (dirigido == 1) {
+        LS[i - 1].emplace_back(dummy); // Colocamos el nodo al que apunta y el coste del arco de cada nodo
+        dummy.j = i - 1; // Asignamos el nodo predecesor
+        LP[j - 1].emplace_back(dummy); // Colocamos el nodo al que apunta y el coste del arco de cada nodo
       } 
     }
   }
     textfile.close();
 }
 
-GRAFO::~GRAFO()
-{
-	destroy();
+GRAFO::~GRAFO() { destroy(); }
+
+GRAFO::GRAFO(char nombrefichero[85], int &errorapertura) {
+  build (nombrefichero, errorapertura);
 }
 
-GRAFO::GRAFO(char nombrefichero[85], int &errorapertura)
-{
-	build (nombrefichero, errorapertura);
+void GRAFO::actualizar (char nombrefichero[85], int &errorapertura) {
+  //Limpiamos la memoria dinamica asumida en la carga previa, como el destructor
+  destroy();
+  //Leemos del fichero y actualizamos G con nuevas LS y, en su caso, LP
+  build(nombrefichero, errorapertura);
 }
 
-void GRAFO:: actualizar (char nombrefichero[85], int &errorapertura)
-{
-    //Limpiamos la memoria dinamica asumida en la carga previa, como el destructor
-    destroy();
-    //Leemos del fichero y actualizamos G con nuevas LS y, en su caso, LP
-    build(nombrefichero, errorapertura);
-}
-
-unsigned GRAFO::Es_dirigido() {
-  return dirigido;
-}
+unsigned GRAFO::Es_dirigido() { return dirigido; }
 
 void GRAFO::Info_Grafo() {
   cout << "El grafo tiene las siguientes caracteristicas: " << '\n';
   cout << "Num. nodos: " << n << '\n';
   cout << "Num. arcos: " << m << '\n';
-  cout << "¿Dirigido?" << (dirigido == 1 ? "Sí" : "No") << '\n';
+  cout << "¿Dirigido? " << (dirigido == 1 ? "Sí" : "No") << '\n';
   cout << '\n';
 }
 
@@ -103,18 +93,19 @@ void Mostrar_Lista(vector<LA_nodo> L, unsigned& nodo) {
       cout << "vacío";
     }
     for (int k{0}; k < L[i].size(); ++k) {
-      cout << " : " << L[i][k].j + 1 << " [" << L[i][k].c << "]";
+      cout << " : " << L[i][k].j + 1 << " [" << L[i][k].c << "] ";
     }
     cout << '\n';
   }
+  cout << L[0][0].j << '\n';
   cout << '\n';
 }
 
 void GRAFO :: Mostrar_Listas (int l) {
   if (l == 0 || l == 1) {
-    Mostrar_Lista(LS, n);
+    Mostrar_Lista(LS, n); // Para los grafos dirigidos y no dirigidos
   } else if ( l == -1) {
-      Mostrar_Lista(LP, n);
+      Mostrar_Lista(LP, n); // Para los grafos dirigidos
   }
 
 }
@@ -142,10 +133,10 @@ void GRAFO::RecorridoProfundidad() {
   unsigned nodo_inicial;
   vector<unsigned> prenum, postnum;
   unsigned prenum_ind = 0, postnum_ind = 0;
-  cout << "Introduce el nodo inicial: [1 - " << n << "]:" << '\n';
+  cout << "Introduce el nodo inicial [1 - " << n << "]:" << '\n';
   cin >> (unsigned &) nodo_inicial;
   while (nodo_inicial < 1 || nodo_inicial > n) {
-    cout << "Introduce un nodo válido: [1 - " << n << "]:" << '\n';
+    cout << "Introduce un nodo válido: [1 - " << n << "]: ";
     cin >> (unsigned &) nodo_inicial;
   }
   prenum.resize(n, 0);
@@ -155,7 +146,7 @@ void GRAFO::RecorridoProfundidad() {
   if ((LS[nodo_inicial - 1].size() != 0) || (LP[nodo_inicial - 1].size() != 0)) {
     cout << "EL preorden es: ";
     bool Se_manifiesta_uno = false;
-    for (int i{0}; i < n; ++i) {
+    for (int i{0}; i < prenum.size(); ++i) {
       if ((!Se_manifiesta_uno) || prenum[i] != 0) {
         if (i != 0) {
             cout << " - ";
@@ -191,7 +182,7 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
 				vector<LA_nodo>  L, //lista que recorremos, LS o LP; por defecto LS
 				vector<unsigned> &pred, //vector de predecesores en el recorrido
 				vector<unsigned> &d) //vector de distancias a nodo i+1
-//Recorrido en amplitud con la construcci�n de pred y d: usamos la cola
+//Recorrido en amplitud con la construccion de pred y d: usamos la cola
 {
     vector<bool> visitado; //creamos e iniciamos el vector visitado
     visitado.resize(n, false);
@@ -205,20 +196,20 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
     queue<unsigned> cola; //creamos e inicializamos la cola
     cola.push(i);//iniciamos el recorrido desde el nodo i+1
 
-    while (!cola.empty()) //al menos entra una vez al visitar el nodo i+1 y contin�a hasta que la cola se vac�e
-    {   unsigned k = cola.front(); //cogemos el nodo k+1 de la cola
+    while (!cola.empty()) // Mientras la cola no esté vacía
+    {   unsigned k = cola.front(); // Extraemos el primer nodo de la cola
         cola.pop(); //lo sacamos de la cola
         //Hacemos el recorrido sobre L desde el nodo k+1
-        for (unsigned j=0;j<L[k].size();j++)
+        for (unsigned j = 0;j < L[k].size();++j)
             //Recorremos todos los nodos u adyacentes al nodo k+1
-            //Si el nodo u no est� visitado
+            //Si el nodo u no esta visitado
             {
             //Lo visitamos
             if(visitado[L[k][j].j] == false) {
               visitado[L[k][j].j] = true;
-              pred[L[k][j].j] = k;
-              d[L[k][j].j] = d[k] + 1;
               cola.push(L[k][j].j);
+              pred[L[k][j].j] = k;
+              d[L[k][j].j] = d[k] + 1; 
             }
             //Lo metemos en la cola
             //le asignamos el predecesor
@@ -229,68 +220,44 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
 }
 
 void GRAFO::RecorridoAmplitud() {//Construye un recorrido en amplitud desde un nodo inicial
-    int nodo_inicial;
-    cout << "Seleccione el nodo por el que desea empezar: 1-" << n << ": ";
-    cin >> nodo_inicial;
-    while (nodo_inicial < 1 || nodo_inicial > n){
-        cout << "El nodo elegido no está en el rango [1 - " << n << "], elige otro: ";
-        cin >> nodo_inicial;
-    }
-    vector<unsigned> pred;
-    vector<unsigned> d;
-    bfs_num(nodo_inicial - 1, LS, pred, d);
-    cout << "Nodo inicial: " << "[" << nodo_inicial << "]" << endl;
-    if ((LS[nodo_inicial - 1].size() != 0) || (LP[nodo_inicial - 1].size() != 0)) { //compruebo que no sea un nodo suelto
-        cout << "Distancia entre el nodo inicial y el resto, según el número de arcos" << endl;
-        int max = d[0]; //inicializo la distancia máxima
-        for (int i{0}; i < d.size(); i++) {
-            if (d[i] > max) {
-                max = d[i]; //calculo si hay alguna otra distancia máxima
-            }
-        }
-        for (int i{0}; i <= max; i++) {
-            cout << "Distancia " << i << " aristas";
-            for (int x{0}; x < d.size(); x++) {
-                if ((d[x] == i) && ((LS[x].size() != 0) || (LP[x].size() != 0))) {
-                    cout << " : " << x + 1;
-                }
-            }
-            cout << endl;
-        }
-        cout << endl;
-        cout << "Predecesores de cada nodo" << endl;
-        for (int i{0}; i < pred.size(); i++) {
-            if (((LS[i].size() != 0) || (LP[i].size() != 0)) && (i != nodo_inicial - 1)) { //compruebo que el nodo tenga predecesor y sucesores y que no sea un nodo suelto para representar el recorrido, y que tampoco sea el inicial
-                //cout << i + 1;
-                //unsigned predecesor_actual = pred[i]; 
-                //while (predecesor_actual != nodo_inicial - 1) { //voy imprimiendo el recorrido
-                //    cout << " <-- " << predecesor_actual + 1; //imprimo el predecesor
-                //    predecesor_actual = pred[predecesor_actual]; //desplazo el predecesor
-                //}
-                //cout << " <-- " << nodo_inicial << endl; //finalmente imprimo el incial
+  vector<unsigned> pred;    // Declaramos el vector de nodos predecesores, la posición es el vector actual, y el número que contiene es su predecesor
+  vector<unsigned> d;       // Declaramos el vector de etiquetas distancia, la posición es el nodo, y el número que contenga, es la distancia del nodo elegido por el usuario
+  int nodo_inicial{0};
 
-                MostrarCamino(nodo_inicial - 1, i, pred);
-                cout << endl;
-            }    
-        }
-    } else {
-        cout << "No es posible llevar a cabo el recorrido porque este nodo no dispone de arcos" << endl;
-    }
-    cout << endl;
+  cout << "Introduce el nodo inicial [1 - " << n << "]:" << '\n';
+  cin >> nodo_inicial;
+
+  while (nodo_inicial < 1 || nodo_inicial > n){
+    cout << "Introduce un nodo válido: [1 - " << n << "]:" << '\n';
+    cin >> nodo_inicial;
+  }
+  
+  cout << "Tu nodo inicial es: [" << nodo_inicial << "]" << endl << endl;
+
+  bfs_num(nodo_inicial - 1, LS, pred, d);
+  cout << "Distancia entre el nodo inicial y el resto, expresado en el número de arcos" << endl << endl;
+
+  for(int i{0}; i < d.size(); ++i) { // Recorremos el vector de distancias para mostrar los nodos a distancia i
+    cout << "[" << i + 1 << "] : " << d[i] << endl;
+  }
+
+  // Mostramos los predecesores
+  cout << endl << "Predecesores de cada nodo" << endl << endl;
+  for(int i{0}; i < pred.size(); ++i) {
+    cout << "Predecesor de " << i + 1 << " : ";
+      cout << pred[i] + 1 << endl;
+  }
+  cout << endl;
 }
 
 void GRAFO::MostrarCamino(int s, int i, vector<unsigned>& pred) {
     if (s != i) {
         MostrarCamino(s, pred[i], pred);
-        std::cout << " --> " << i + 1;
+        std::cout << " - " << i + 1;
     } else {
         std::cout << s + 1;
     }
 }
-
-
-
-
 
 
 
