@@ -98,7 +98,6 @@ void Mostrar_Lista(vector<LA_nodo> L, unsigned& nodo) {
     cout << '\n';
   }
   cout << L[0][0].j << '\n';
-  cout << '\n';
 }
 
 void GRAFO :: Mostrar_Listas (int l) {
