@@ -17,29 +17,29 @@ template <class T> class sll_node_t {
  public:
   // constructores
   sll_node_t(void) : data_(), next_(NULL) {}  // constructor por defecto
-  sll_node_t(const T& data) : data_(data), next_(NULL) {} // constructor
+  sll_node_t(const T& data) : data_(data), next_(NULL) {} // constructor de copia
 
   // destructor
-  ~sll_node_t(void) {};
+  ~sll_node_t(void) {}; // destructor de la clase 
 
   // getters & setters
-  sll_node_t<T>* get_next(void) const { return next_; }
-  void set_next(sll_node_t<T>* next) { next_ = next; }
+  sll_node_t<T>* get_next(void) const { return next_; } // método que obtiene el siguiente nodo
+  void set_next(sll_node_t<T>* next) { next_ = next; } // método que establece el siguiente nodo
 
-  const T& get_data(void) const { return data_; }
-  void set_data(const T& data) { data_ = data; }
+  const T& get_data(void) const { return data_; } // método que obtiene el dato
+  void set_data(const T& data) { data_ = data; } // método que establece el dato
 
   // E/S
-  std::ostream& write(std::ostream& = std::cout) const;
+  std::ostream& write(std::ostream& = std::cout) const; // escribe el dato
 
  private:
-  T data_;
-  sll_node_t<T>* next_;
+  T data_; // dato
+  sll_node_t<T>* next_; // puntero al siguiente nodo
 };
 
 
 // E/S
-template <class T> std::ostream& sll_node_t<T>::write(std::ostream& os) const  {
+template <class T> std::ostream& sll_node_t<T>::write(std::ostream& os) const  { // escribe el dato
   os << data_;
   return os;
 }
