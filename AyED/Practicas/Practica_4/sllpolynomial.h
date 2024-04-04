@@ -19,7 +19,7 @@
 #include "vector_t.h"
 
 #define EPS 1.0e-6
-
+                
 typedef pair_t<double> pair_double_t;  // Campo data_ de SllPolynomial
 typedef sll_node_t<pair_double_t> SllPolyNode;  // Nodos de SllPolynomial
 
@@ -27,19 +27,19 @@ typedef sll_node_t<pair_double_t> SllPolyNode;  // Nodos de SllPolynomial
 class SllPolynomial : public sll_t<pair_double_t> {
  public:
   // constructores
-  SllPolynomial(void) : sll_t() {};
-  SllPolynomial(const vector_t<double>&, const double = EPS);
+  SllPolynomial(void) : sll_t() {}; // constructor por defecto
+  SllPolynomial(const vector_t<double>&, const double = EPS); // constructor de copia
 
   // destructor
-  ~SllPolynomial() {};
+  ~SllPolynomial() {}; // destructor de la clase
 
   // E/S
-  void Write(std::ostream& = std::cout) const;
+  void Write(std::ostream& = std::cout) const; // escribe el polinomio
   
   // operaciones
-  double Eval(const double) const;
-  bool IsEqual(const SllPolynomial&, const double = EPS) const;
-  void Sum(const SllPolynomial&, SllPolynomial&, const double = EPS);
+  double Eval(const double) const; // evalúa el polinomio en x
+  bool IsEqual(const SllPolynomial&, const double = EPS) const; // comparación del polinomio con tolerancia EPS
+  void Sum(const SllPolynomial&, SllPolynomial&, const double = EPS); //suma de polinomios con  tolerancia EPS
 };
 
 
@@ -50,13 +50,18 @@ bool IsNotZero(const double val, const double eps = EPS) {
 // FASE II
 // constructor
 SllPolynomial::SllPolynomial(const vector_t<double>& v, const double eps) {
-  // poner el código aquí
-  
+  for (int i{v.get_size() - 1}; i >= 0; --i) {
+    if (IsNotZero(v.at(i), eps)) {
+      pair_double_t p(v.at(i), i);
+      SllPolyNode* aux = new SllPolyNode(p);
+      push_front(aux);
+    }
+  } 
 }
 
 
 // E/S
-void SllPolynomial::Write(std::ostream& os) const {
+void SllPolynomial::Write(std::ostream& os) const { // escribe el polinomio
   os << "[ ";
   bool first{true};
   SllPolyNode* aux{get_head()};
@@ -89,25 +94,100 @@ std::ostream& operator<<(std::ostream& os, const SllPolynomial& p) {
 double SllPolynomial::Eval(const double x) const {
   double result{0.0};
   // poner el código aquí
-  
+  SllPolyNode* aux(get_head()); // Creamos un auxiliar para recorrer la lista
+
+  while (aux != NULL) { // Mientras no lleguemos al final de la lista
+    int index(aux->get_data().get_inx()); // Obtenemos el indice
+    double val(aux->get_data().get_val()); // Obtenemos el valor
+    result = result + val * pow(x, index); // Calculamos el resultado
+    aux = aux->get_next(); // Avanzamos al siguiente nodo
+  }
   return result;
 }
 
 // Comparación si son iguales dos polinomios representados por listas simples
-bool SllPolynomial::IsEqual(const SllPolynomial& sllpol,
-			    const double eps) const {
+bool SllPolynomial::IsEqual(const SllPolynomial& sllpol, const double eps) const {
   bool differents = false;
-  // poner el código aquí
+  SllPolyNode* aux(get_head()); // Creamos un auxiliar para recorrer la lista, del primer polinomio
+  SllPolyNode* second_aux(sllpol.get_head()); // Creamos un auxiliar para recorrer la lista del segundo polinomio
 
+  while (aux != NULL && second_aux != NULL) { // Mientras no lleguemos al final de la lista
+    int index(aux->get_data().get_inx()); // Obtenemos el indice del primer polinomio
+    double val(aux->get_data().get_val()); // Obtenemos el valor del primer polinomio
+    int segundo_inx(second_aux->get_data().get_inx()); // Obtenemos el indice del segundo polinomio
+    double segundo_val(second_aux->get_data().get_val()); // Obtenemos el valor del segundo polinomio
+
+    if (index != segundo_inx && val != segundo_val) { // Si los indices o los valores son distintos
+      return differents; 
+    }
+    aux = aux->get_next(); // Avanzamos al siguiente nodo del primer polinomio
+    second_aux = second_aux->get_next(); // Avanzamos al siguiente nodo del segundo polinomio
+  }
+  if (aux != NULL || second_aux != NULL) { // Si alguno de los dos polinomios tiene mas elementos devuelvo false
+    return differents;
+  }
   return !differents;
 }
 
 // FASE IV
 // Generar nuevo polinomio suma del polinomio invocante mas otro polinomio
-void SllPolynomial::Sum(const SllPolynomial& sllpol,
-			SllPolynomial& sllpolsum,
-			const double eps) {
-  // poner el código aquí
+void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, const double eps) {
+  SllPolynomial auxSllPolSum; // Creamos un polinomio auxiliar
+  SllPolyNode* aux = get_head(); // Creamos un auxiliar para recorrer la lista, del primer polinomio
+  SllPolyNode* aux2 = sllpol.get_head(); // Creamos un auxiliar para recorrer la lista del segundo polinomio
+  pair_double_t pair; // Creamos un pair_double_t para guardar el valor e indice
+  double sum = 0.0;
+
+  // si tienen los mismos exponentes se suman
+  while (aux != NULL || aux2 != NULL) { // Mientras no lleguemos al final de la lista
+    if (aux != NULL && aux2 != NULL) { // Si los dos polinomios igual tamaño
+      if (aux->get_data().get_inx() == aux2->get_data().get_inx()) { // Si los indices son iguales
+        sum = aux->get_data().get_val() + aux2->get_data().get_val(); // Sumamos los valores
+        if (IsNotZero(sum, eps)) { // Si la suma no es 0
+          pair.set(sum, aux->get_data().get_inx()); // Guardamos la suma e indice en el pair
+          auxSllPolSum.push_front(new SllPolyNode(pair)); // Guardamos el pair en el polinomio auxiliar
+        }
+        if (aux != NULL) aux = aux->get_next(); // Avanzamos al siguiente nodo del primer polinomio
+        if (aux2 != NULL) aux2 = aux2->get_next(); // Avanzamos al siguiente nodo del segundo polinomio
+      } else if (aux->get_data().get_inx() > aux2->get_data().get_inx()) { // Si el indice del primer polinomio es mayor
+        sum = aux2->get_data().get_val(); // Guardamos la suma del segundo polinomio
+        if (IsNotZero(sum, eps)) { // Si la suma no es 0  
+          pair.set(sum, aux2->get_data().get_inx()); // Guardamos la suma e indice en el pair
+          auxSllPolSum.push_front(new SllPolyNode(pair));// Guardamos el pair en el polinomio auxiliar
+        }
+        if (aux2 != NULL) aux2 = aux2->get_next(); // Avanzamos al siguiente nodo del segundo polinomio
+      } else {
+        sum = aux->get_data().get_val(); // Guardamos la suma del primer polinomio
+        if (IsNotZero(sum, eps)) { // Si la suma no es 0
+          pair.set(sum, aux->get_data().get_inx()); // Guardamos la suma e indice en el pair
+          auxSllPolSum.push_front(new SllPolyNode(pair));// Guardamos el pair en el polinomio auxiliar
+        }
+
+        if (aux != NULL) aux = aux->get_next(); // Avanzamos al siguiente nodo del primer polinomio
+      }
+                                                         // Si alguno de los dos polinomios esta vacio
+    } else if (aux == NULL) {                            // Si el primer polinomio esta vacio
+      sum = aux2->get_data().get_val(); // Guardamos la suma del segundo polinomio
+      if (IsNotZero(sum, eps)) { // Si la suma no es 0
+        pair.set(sum, aux2->get_data().get_inx()); // Guardamos la suma e indice en el pair
+        auxSllPolSum.push_front(new SllPolyNode(pair)); // Guardamos el pair en el polinomio auxiliar
+      }
+      if (aux2 != NULL) aux2 = aux2->get_next(); // Avanzamos al siguiente nodo del segundo polinomio
+
+    } else if (aux2 == NULL) { // Si el segundo polinomio esta vacio
+      sum = aux->get_data().get_val(); // Guardamos la suma del primer polinomio
+      if (IsNotZero(sum, eps)) { // Si la suma no es 0
+        pair.set(sum, aux2->get_data().get_inx()); // Guardamos la suma e indice en el pair
+        auxSllPolSum.push_front(new SllPolyNode(pair)); // Guardamos el pair en el polinomio auxiliar
+      }
+
+      if (aux != NULL) aux = aux->get_next(); // Avanzamos al siguiente nodo del primer polinomio
+    }
+  }
+
+  while (!auxSllPolSum.empty()) { // Mientras el polinomio auxiliar no este vacio
+    sllpolsum.push_front(auxSllPolSum.pop_front()); // Guardamos el polinomio auxiliar en el polinomio suma
+  }
 
 }
 
