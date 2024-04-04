@@ -17,46 +17,46 @@
 template<class T> class vector_t {
  public:
   // constructores
-  vector_t(const int = 0);
+  vector_t(const int = 0); // constructor por defecto
   vector_t(const vector_t&); // constructor de copia
 
   // operador de asignación
-  vector_t<T>& operator=(const vector_t<T>&);
+  vector_t<T>& operator=(const vector_t<T>&); // sobrecarga del operador de asignación
 
   // destructor
-  ~vector_t();
+  ~vector_t(); // destructor de la clase 
   
   // getters
-  T get_val(const int) const;
-  int get_size(void) const;
+  T get_val(const int) const; // devuelve el valor del vector 
+  int get_size(void) const; // devuelve el tamaño del vector
   
   // setters
-  void set_val(const int, const T);
+  void set_val(const int, const T); // establece el valor del vector
   
   // getters-setters
-  T& at(const int);
-  T& operator[](const int);
+  T& at(const int); // devuelve el valor del vector en la posición i
+  T& operator[](const int); // sobrecarga del operador [], para asignaciones del tipo v[0] = 1;
   
   // getters constantes
-  const T& at(const int) const;
-  const T& operator[](const int) const;
+  const T& at(const int) const; // obtiene el valor del vector en la posición i
+  const T& operator[](const int) const; // sobrecarga del operador [], para lecturas del tipo cout << v[0];
 
   // Redimensionado
-  void resize(const int);
+  void resize(const int); // método para redimensionar el vector
   
   // E/S
-  void read(std::istream& = std::cin);
-  void write(std::ostream& = std::cout) const;
+  void read(std::istream& = std::cin); // método para leer el vector
+  void write(std::ostream& = std::cout) const; // método para escribir el vector
 
  private:
-  T *v_;
-  int sz_;
+  T *v_; // vector
+  int sz_; // tamaño del vector
   
-  void build(void);
-  void destroy(void);
+  void build(void); // método para construir el vector
+  void destroy(void); // método para destruir el vector
 };
 
-
+// constructor por defecto
 template<class T> vector_t<T>::vector_t(const int n) : v_(NULL), sz_(n) {
   build();
 }
