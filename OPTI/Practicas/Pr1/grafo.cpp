@@ -142,13 +142,13 @@ void GRAFO::RecorridoProfundidad() {
   postnum.resize(n, 0);
 
   dfs_num(nodo_inicial, LS, visitado, prenum, prenum_ind, postnum, postnum_ind);
-  if ((LS[nodo_inicial - 1].size() != 0) || (LP[nodo_inicial - 1].size() != 0)) {
+  if ((LS[nodo_inicial - 1].size() != 0) || (LP[nodo_inicial - 1].size() != 0)) { // Si el nodo tiene arcos
     cout << "EL preorden es: ";
     bool Se_manifiesta_uno = false;
     for (int i{0}; i < prenum.size(); ++i) {
       if ((!Se_manifiesta_uno) || prenum[i] != 0) {
         if (i != 0) {
-            cout << " - ";
+            cout << " --> ";
         }
         cout << "[" << prenum[i] << "]";
       }
@@ -163,7 +163,7 @@ void GRAFO::RecorridoProfundidad() {
     for (int i{0}; i < postnum.size(); ++i) {
       if ((!Se_manifiesta_dos) || postnum[i] != 0) {
         if (i != 0) {
-            cout << " - ";
+            cout << " --> ";
         }
         cout << "[" << postnum[i] + 1 << "]";
       }
@@ -206,13 +206,10 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
             //Lo visitamos
             if(visitado[L[k][j].j] == false) {
               visitado[L[k][j].j] = true;
-              cola.push(L[k][j].j);
-              pred[L[k][j].j] = k;
-              d[L[k][j].j] = d[k] + 1; 
+              cola.push(L[k][j].j); //Lo metemos en la cola
+              pred[L[k][j].j] = k; //le asignamos el predecesor
+              d[L[k][j].j] = d[k] + 1; //le calculamos su etiqueta distancia
             }
-            //Lo metemos en la cola
-            //le asignamos el predecesor
-            //le calculamos su etiqueta distancia
             };
         //Hemos terminado pues la cola est� vac�a
     };
