@@ -50,11 +50,11 @@ bool IsNotZero(const double val, const double eps = EPS) {
 // FASE II
 // constructor
 SllPolynomial::SllPolynomial(const vector_t<double>& v, const double eps) {
-  for (int i{v.get_size() - 1}; i >= 0; --i) {
-    if (IsNotZero(v.at(i), eps)) {
-      pair_double_t p(v.at(i), i);
-      SllPolyNode* aux = new SllPolyNode(p);
-      push_front(aux);
+  for (int i{v.get_size() - 1}; i >= 0; --i) { // Recorremos el vector desde el final
+    if (IsNotZero(v.at(i), eps)) { // comprobamos si el valor es distinto de 0
+      pair_double_t p(v.at(i), i); // Creamos un pair_double_t con el valor y el indice
+      SllPolyNode* aux = new SllPolyNode(p); // Creamos un nodo con el pair
+      push_front(aux); // Insertamos el nodo en la lista
     }
   } 
 }
