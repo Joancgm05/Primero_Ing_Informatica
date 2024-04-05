@@ -70,4 +70,4 @@ template<class T> std::ostream& operator<<(std::ostream& os, const pair_t<T>& p)
   return os;
 }
 
-#endif PAIRT_H_
+#endif // PAIRT_H_
