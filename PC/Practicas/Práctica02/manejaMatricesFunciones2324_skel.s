@@ -124,6 +124,15 @@ str_conValor:	.asciiz	") con valor "
 
 str_matTiene:	.asciiz	"\n\nLa matriz tiene dimension "
 
+opc_0 = 0
+opc_1 = 1
+opc_2 = 2
+opc_3 = 3
+opc_4 = 4
+opc_5 = 5
+opc_6 = 6
+opc_7 = 7
+
 	.text
 
 # subrutinas
@@ -136,14 +145,15 @@ str_matTiene:	.asciiz	"\n\nLa matriz tiene dimension "
 
 print_mat:
 	# Función para imprimir una matriz por consola
+	# PUSH
 	addi $sp, $sp, -32
-	sw 		$s0, 0($sp)  # Primer elemento de la matriz
-	sw 		$s1, 4($sp)  # Número de filas
-	sw 		$s2, 8($sp)  # Número de columnas
-	sw 		$s3, 12($sp) # Dirreción de la matriz
-	sw 		$s4, 16($sp) # Tamaño de la matriz
-	sw 		$s5, 20($sp) # Índice de filas 
-	sw 		$s6, 24($sp) # Índice de columnas 
+	sw 		$s0, 0($sp)  
+	sw 		$s1, 4($sp)  
+	sw 		$s2, 8($sp)  
+	sw 		$s3, 12($sp) 
+	sw 		$s4, 16($sp) 
+	sw 		$s5, 20($sp)  
+	sw 		$s6, 24($sp) 
 	sw 		$ra, 28($sp)
 
 	move $s3, $a1
@@ -173,8 +183,8 @@ print_mat:
 	li 		$v0, 11
 	syscall
 
-	mul 	$s4, $s1, $s2 # Tamaño de la matriz
-	beqz 	$s4, next_instruction
+	mul 	$s4, $s1, $s2 # Se almacena en $s4 el tamaño de la matriz
+	beqz 	$s4, next_instruction # Si el tamaño de la matriz es cero se salta a la siguiente instrucción
 	move 	$s5, $zero # Se inicializa el índice de filas a 0
 	move 	$s6, $zero # Se inicializa el índice de columnas a 0
 
@@ -183,19 +193,20 @@ for_print_mat:
 	l.s 	$f4, 0($s0) # Cargo en f4 el flotante que se encuentra en $s0
 	
 	# std::cout << elem[f*nCol + c] << ' ';
+	# std::cout << elem[f*nCol + c]
 	li 		$v0, 2
 	mov.s 	$f12, $f4
+	# std::cout << " "
 	syscall
-
 	li 		$v0, 11
 	li 		$a0, 32
 	syscall
 
 
-	addi  	$s0, $s0, sizeF
+	addi  	$s0, $s0, sizeF # Se almacena el tamaño de un flotante (4)
 	addi 	$s5, $s5, 1 # Se añade 1 al índice de filas
 	addi 	$s6, $s6, 1 # Se añade 1 al índice de columnas
-	bne		$s6, $s2, print_line_jump
+	bne		$s6, $s2, print_line_jump # Si el índice y el número de columnas es igual se hace un salto de línea
 	move  	$s6, $zero # Se inicializa el índice de columnas a 0
 	
 	# std::cout << '\n';
@@ -214,6 +225,7 @@ print_line_jump:
 
 next_instruction:
 
+	#POP
 	lw 		$s0, 0($sp)
 	lw		$s1, 4($sp)
 	lw		$s2, 8($sp)
@@ -292,14 +304,14 @@ intercambia:
 	addu 	$t8, $t8, $t0 # Se almacena la dirección
 	move 	$a3, $t8
 	
-	# Pila para almacenar la dirección
+	# Pila para almacenar la dirección (PUSH)
 	addi 	$sp, $sp, -4 
 	sw 		$ra, 0($sp)
 
 	# Vuelvo a llamar a la función
 	jal 	swap 
 
-	# Recupero la dirección almacenada en la pila
+	# Recupero la dirección almacenada en la pila (POP)
 	lw 		$ra, 0($sp)
 	addi 	$sp, $sp, 4
 
@@ -337,27 +349,27 @@ for_find_min_two:
 	l.s		 $f5, 0($t9) #asigno el valor de ese punto
 	#if (valor < min) {
 	c.lt.s 	$f5, $f4
-	bc1f 	salto_find
+	bc1f 	find_jump
 	mov.s 	$f4, $f5 #min = valor;
 	move 	$t6, $t4 #fmin = f;
 	move 	$t7, $t5 #cmin = c;
 
-salto_find:
-	addi 	$t5, $t5, 1
-	blt 	$t5, $t2, for_find_min_two
+find_jump:
+	addi 	$t5, $t5, 1 # Se le suma 1 al índice de columnas
+	blt 	$t5, $t2, for_find_min_two # Si el índice de columnas es menor que el número de columnas se salta el segundo buble
 
-	addi 	$t4, $t4, 1
-	blt 	$t4, $t1, for_find_min_one
+	addi 	$t4, $t4, 1 # Se le suma 1 al índice de filas 
+	blt 	$t4, $t1, for_find_min_one # Si el índice de filas es menor que el número de filas se salta al primer blucle
 
 find_out:
 
-	mov.s 	$f0, $f4
-	move 	$v0, $t6
-	move 	$v1, $t7
+	mov.s 	$f0, $f4 # Se carga en $f0 el contenido de $f4
+	move 	$v0, $t6 # Se carga en $v0 el contenido de $t6
+	move 	$v1, $t7 # Se carga en $v1 el contenido de $t7 
 
 	jr 		$ra
 
-find_min_fin:
+find_min_end:
 
 # MAIN
 # $s0 = se almacena la opción elegida
@@ -390,15 +402,13 @@ while:
 
 	li 		$v0, 5
 	syscall
-
-	move 	$s0, $v0
-	beq		$s0, opc_0, termina_programa
-	beq 	$s0, opc_1, cambiar_matriz
-	beq 	$s0, opc_2, ordenacion_burbuja
-	beq 	$s0, opc_3, cambiar_intercambiar_valor_elemento
-	beq 	$s0, opc_4, cambiar_intercambiar_valor_elemento
-	beq 	$s0, opc_7, encontrar_minimo
-	
+	move $s0, $v0
+	beq $s0, opc_0, termina_programa
+	beq $s0, opc_1, change_mat
+	beq $s0, opc_2, ordenacion_burbuja
+	beq $s0, opc_3, change_element_value
+	beq $s0, opc_4, change_element_value
+	beq $s0, opc_7, find_min	
 	# std::cout << "Numero de matriz de trabajo incorrecto\n";
 	li 		$v0, 4
 	la 		$a0, str_errorOpc
@@ -406,10 +416,10 @@ while:
 	
 	j 		while
 
-while_fin:
+while_end:
 
 # $s1 --> almacenamos la matriz escogida
-cambiar_matriz:
+change_mat:
 	# std::cout << "\nElije la matriz de trabajo (1..6): ";
 	li 		$v0, 4
 	la 		$a0, str_elijeMat
@@ -471,7 +481,7 @@ cambiar6:
 	j 		while
 
 
-cambiar_matriz_fin: 
+change_mat_end: 
 
 # $a1 Almacena la dirección de la matriz
 # $a2 Almacena la fila del elemento
@@ -481,7 +491,7 @@ cambiar_matriz_fin:
 # $s3 Almacena las columnas
 # $s4 Almacena el índice de la fila
 # s5 Almacena el índice de la columna
-cambiar_intercambiar_valor_elemento:
+change_element_value:
 	
 	lw 		$s2, 0($s7)  # Se almacena nFil
 	lw 		$s3, 4($s7)	# Se almacena nCol
@@ -554,12 +564,12 @@ error_columna:
 	#continue;
 	j 		while
 
-cambiar_intercambiar_valor_elemento_fin:
+change_element_value_fin:
 
 # $s0 --> índice fila mínimo
 # $s1 --> índice columna mínimo
 # $f20 --> valor flotante mínimo
-encontrar_minimo:
+find_min:
 	move 	$a1, $s7
 	#std::tie(valorMin, filaMin, columnaMin) = find_min(matTrabajo);
 	jal 	find_min
@@ -588,7 +598,7 @@ encontrar_minimo:
 	li 		$v0, 2
 	syscall
 	j 		while
-encontrar_minimo_fin:
+find_min_end:
 
 
 # MODIFICACIÓN-PRUEBA
@@ -635,11 +645,11 @@ sort_row:
 	move 	$t4, $zero # inicializo el índice de filas a 0 (i)
 
 # for(int f = 0; f < nFil; f++) {
-for_sort: 
+for_sort_one: 
 	move 	$t5, $zero # inicializo el índice de columnas a 0 (j)
 	
 
-segundo_for_sort:
+for_sort_two:
 	#hallo la posición del primer elemento
 	mul 	$t7, $a2, $t2 #nCol * índFila
 	add 	$t7, $t7, $t5 #nCol * indFila + j
@@ -655,7 +665,7 @@ segundo_for_sort:
 	l.s 	$f5, 0($t8)
 	#comparo el valor de los dos
 	c.le.s 	$f4, $f5
-	bc1t 	salto_sort # si no se cumple que sea mayor se salta el if
+	bc1t 	sort_jump # si no se cumple que sea mayor se salta el if
 	move 	$a0, $t7
 	move 	$a3, $t8
 	
@@ -665,14 +675,14 @@ segundo_for_sort:
 	lw 		$ra, 0($sp)
 	addi 	$sp, $sp, 4
 
-salto_sort:
+sort_jump:
 	
 	sub 	$t6, $t3, $t4 #nCol - 1 - i
 	addi 	$t5, $t5, 1 # j++
-	blt 	$t5, $t6, segundo_for_sort
+	blt 	$t5, $t6, for_sort_two
 
 	addi 	$t4, $t4, 1 # i++
-	blt 	$t4, $t3, for_sort
+	blt 	$t4, $t3, for_sort_one
 
 
 salir_sort_row:
@@ -681,6 +691,7 @@ salir_sort_row:
 sort_row_fin:
 
 termina_programa:
+	# std::cout << "\nTermina el programa\n"
 	li 		$v0, 4
 	la 		$a0, str_termina
 	syscall
