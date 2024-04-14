@@ -124,14 +124,14 @@ str_conValor:	.asciiz	") con valor "
 
 str_matTiene:	.asciiz	"\n\nLa matriz tiene dimension "
 
-opc_0 = 0
-opc_1 = 1
-opc_2 = 2
-opc_3 = 3
-opc_4 = 4
-opc_5 = 5
-opc_6 = 6
-opc_7 = 7
+option_0 = 0
+option_1 = 1
+option_2 = 2
+option_3 = 3
+option_4 = 4
+option_5 = 5
+option_6 = 6
+option_7 = 7
 
 	.text
 
@@ -403,12 +403,12 @@ while:
 	li 		$v0, 5
 	syscall
 	move $s0, $v0
-	beq $s0, opc_0, termina_programa
-	beq $s0, opc_1, change_mat
-	beq $s0, opc_2, ordenacion_burbuja
-	beq $s0, opc_3, change_element_value
-	beq $s0, opc_4, change_element_value
-	beq $s0, opc_7, find_min	
+	beq $s0, option_0, termina_programa
+	beq $s0, option_1, change_mat
+	beq $s0, option_2, ordenacion_burbuja
+	beq $s0, option_3, change_element_value
+	beq $s0, option_4, change_element_value
+	beq $s0, option_7, find_min	
 	# std::cout << "Numero de matriz de trabajo incorrecto\n";
 	li 		$v0, 4
 	la 		$a0, str_errorOpc
@@ -429,12 +429,12 @@ change_mat:
 	syscall
 	move 	$s1, $v0 
 
-	beq 	$s1, opc_1, cambiar1 # if (matT == 1) {
-	beq 	$s1, opc_2, cambiar2 # if (matT == 2) {
-	beq 	$s1, opc_3, cambiar3 # if (matT == 3) {
-	beq 	$s1, opc_4, cambiar4 # if (matT == 4) {
-	beq 	$s1, opc_5, cambiar5 # if (matT == 5) {
-	beq 	$s1, opc_6, cambiar6 # if (matT == 6) {
+	beq 	$s1, option_1, change1 # if (matT == 1) {
+	beq 	$s1, option_2, change2 # if (matT == 2) {
+	beq 	$s1, option_3, change3 # if (matT == 3) {
+	beq 	$s1, option_4, change4 # if (matT == 4) {
+	beq 	$s1, option_5, change5 # if (matT == 5) {
+	beq 	$s1, option_6, change6 # if (matT == 6) {
 
 	# std::cout << "Numero de matriz de trabajo incorrecto\n";
 	# continue;  // volvemos al principio del bucle
@@ -446,37 +446,37 @@ incorrecto:
 
 	# matTrabajo = &mat1;
 	# continue; 
-cambiar1:
+change1:
 	la 		$s7, mat1
 	j 		while
 
 	# matTrabajo = &mat2;
 	# continue; 
-cambiar2:
+change2:
 	la 		$s7, mat2
 	j 		while
 
 	# matTrabajo = &mat3;
 	# continue; 
-cambiar3:
+change3:
 	la 		$s7, mat3
 	j 		while
 
 	# matTrabajo = &mat4;
 	# continue; 
-cambiar4:
+change4:
 	la 		$s7, mat4
 	j 		while
 
 	# matTrabajo = &mat5;
 	# continue; 
-cambiar5:
+change5:
 	la 		$s7, mat5
 	j 		while
 
 	# matTrabajo = &mat6;
 	# continue; 
-cambiar6:
+change6:
 	la 		$s7, mat6
 	j 		while
 
@@ -507,7 +507,7 @@ change_element_value:
 	slt 	$t0, $s4, $zero
 	sge 	$t1, $s4, $s2
 	or 		$t0, $t0, $t1
-	bnez 	$t0, error_fila
+	bnez 	$t0, fil_error
 	#std::cout << "Indice de columna: ";
 	li 		$v0, 4
 	la 		$a0, str_indCol
@@ -520,9 +520,9 @@ change_element_value:
 	slt 	$t0, $s5, $zero
 	sge 	$t1, $s5, $s3
 	or 		$t0, $t0, $t1
-	bnez 	$t0, error_columna
+	bnez 	$t0, col_error
 
-	beq 	$s0, opc_3, change_value
+	beq 	$s0, option_3, change_value
 
 	move 	$a1, $s7
 	move	$a2, $s4
@@ -550,14 +550,14 @@ change_value:
 	
 
 # std::cerr << "Error: dimension incorrecta.  Numero de fila incorrecto\n";
-error_fila:
+fil_error:
 	li 		$v0, 4
 	la 		$a0, str_errorFil
 	syscall
 	#continue;
 	j		 while
 #  std::cerr << "Error: dimension incorrecta.  Numero de columna incorrecto\n";
-error_columna:
+col_error:
 	li 		$v0, 4
 	la 		$a0, str_errorCol
 	syscall
@@ -569,10 +569,10 @@ change_element_value_fin:
 # $s0 --> índice fila mínimo
 # $s1 --> índice columna mínimo
 # $f20 --> valor flotante mínimo
-find_min:
+encontrar_minimo:
 	move 	$a1, $s7
 	#std::tie(valorMin, filaMin, columnaMin) = find_min(matTrabajo);
-	jal 	find_min
+	jal 	encontrar_minimo
 	move 	$s0, $v0 
 	move 	$s1, $v1
 	mov.s 	$f20, $f0
@@ -598,8 +598,7 @@ find_min:
 	li 		$v0, 2
 	syscall
 	j 		while
-find_min_end:
-
+encontrar_minimo_fin:
 
 # MODIFICACIÓN-PRUEBA
 # $s2 --> filas
@@ -621,7 +620,7 @@ ordenacion_burbuja:
 	slt 	$t0, $s4, $zero
 	sge 	$t1, $s4, $s2
 	or 		$t0, $t0, $t1
-	bnez 	$t0, error_fila
+	bnez 	$t0, fil_error
 	move 	$a0, $s7 #dirección
 	move 	$a2, $s4 #índice fila
 
@@ -640,7 +639,7 @@ sort_row:
 	move 	$t9, $a2 #índice fila
 
 	mul 	$t8, $t1,$t2
-	beqz 	$t8, salir_sort_row
+	beqz 	$t8, sort_row_out
 
 	move 	$t4, $zero # inicializo el índice de filas a 0 (i)
 
@@ -685,10 +684,10 @@ sort_jump:
 	blt 	$t4, $t3, for_sort_one
 
 
-salir_sort_row:
+sort_row_out:
 
 	jr 		$ra
-sort_row_fin:
+sort_row_end:
 
 termina_programa:
 	# std::cout << "\nTermina el programa\n"
