@@ -141,7 +141,7 @@ print_mat:
 	sw 		$s1, 4($sp)  # Número de filas
 	sw 		$s2, 8($sp)  # Número de columnas
 	sw 		$s3, 12($sp) # Dirreción de la matriz
-	sw 		$s4, 16($sp) # tamaño de la matriz
+	sw 		$s4, 16($sp) # Tamaño de la matriz
 	sw 		$s5, 20($sp) # Índice de filas 
 	sw 		$s6, 24($sp) # Índice de columnas 
 	sw 		$ra, 28($sp)
