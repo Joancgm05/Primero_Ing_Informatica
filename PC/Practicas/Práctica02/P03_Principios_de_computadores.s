@@ -146,7 +146,7 @@ option_7 = 7
 print_mat:
 	# Función para imprimir una matriz por consola
 	# PUSH
-	addi $sp, $sp, -32
+	addi 	$sp, $sp, -32
 	sw 		$s0, 0($sp)  
 	sw 		$s1, 4($sp)  
 	sw 		$s2, 8($sp)  
@@ -201,7 +201,6 @@ for_print_mat:
 	li 		$v0, 11
 	li 		$a0, 32
 	syscall
-
 
 	addi  	$s0, $s0, sizeF # Se almacena el tamaño de un flotante (4)
 	addi 	$s5, $s5, 1 # Se añade 1 al índice de filas
@@ -270,7 +269,7 @@ swap:
 	l.s 	$f4, 0($a0) # float temp1 = *e1;
 	l.s 	$f5, 0($a3) # float temp2 = *e2;
 	s.s 	$f5, 0($a0) # *e1 = temp2;
-	s.s 	$f4. 0($a3) # *e2 = temp1;
+	s.s 	$f4, 0($a3) # *e2 = temp1;
 	jr 		$ra
 
 swap_fin:
