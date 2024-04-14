@@ -473,95 +473,86 @@ cambiar6:
 
 cambiar_matriz_fin: 
 
-# $a1 --> dirección de la matriz
-# $a2 --> fila del elemento
-# $a3 --> columna del elemento
-# $f12 --> nuevo flotante
-# $s2 --> filas
-# $s3 --> columnas
-# $s4 --> índice fila
-# s5 --> índice columna
+# $a1 Almacena la dirección de la matriz
+# $a2 Almacena la fila del elemento
+# $a3 Almacena la columna del elemento
+# $f12 Almacena un flotante
+# $s2 Almacena las filas
+# $s3 Almacena las columnas
+# $s4 Almacena el índice de la fila
+# s5 Almacena el índice de la columna
 cambiar_intercambiar_valor_elemento:
 	
-	lw $s2, 0($s7)  #nFila
-	lw $s3, 4($s7)	#nColumna
-	
+	lw 		$s2, 0($s7)  # Se almacena nFil
+	lw 		$s3, 4($s7)	# Se almacena nCol
 	#std::cout << "\nIndice de fila: ";
-	li $v0, 4
-	la $a0, str_indFila
+	li 		$v0, 4
+	la 		$a0, str_indFila
 	syscall
-	
 	#std::cin >> indFil;
-	li $v0, 5
+	li 		$v0, 5
 	syscall
-	move $s4, $v0
-	
+	move 	$s4, $v0
 	#if ((indFil < 0) || (indFil >= matTrabajo->nFil)) {
-	slt $t0, $s4, $zero
-	sge $t1, $s4, $s2
-	or $t0, $t0, $t1
-	bnez $t0, error_fila
-
+	slt 	$t0, $s4, $zero
+	sge 	$t1, $s4, $s2
+	or 		$t0, $t0, $t1
+	bnez 	$t0, error_fila
 	#std::cout << "Indice de columna: ";
-	li $v0, 4
-	la $a0, str_indCol
+	li 		$v0, 4
+	la 		$a0, str_indCol
 	syscall
-
 	#std::cin >> indCol;
-	li $v0, 5
+	li 		$v0, 5
 	syscall
-	move $s5, $v0
-
+	move 	$s5, $v0
 	#if ((indCol < 0) || (indCol >= matTrabajo->nCol)){
-	slt $t0, $s5, $zero
-	sge $t1, $s5, $s3
-	or $t0, $t0, $t1
-	bnez $t0, error_columna
+	slt 	$t0, $s5, $zero
+	sge 	$t1, $s5, $s3
+	or 		$t0, $t0, $t1
+	bnez 	$t0, error_columna
 
-	beq $s0, opc_3, cambiar_valor
-	#si la opción escogida es 4 salta a la subrutina intercambia
-	move $a1, $s7
-	move $a2, $s4
-	move $a3, $s5
-	jal intercambia
-	j while
+	beq 	$s0, opc_3, change_value
 
+	move 	$a1, $s7
+	move	$a2, $s4
+	move	$a3, $s5
+	jal 	intercambia
+	j 		while
 
-	cambiar_valor:
+change_value:
 	#std::cout << "Nuevo valor para el elemento: ";
-	li $v0, 4
-	la $a0, str_nuevoValor
+	li 		$v0, 4
+	la 		$a0, str_nuevoValor
 	syscall
-
 	#std::cin >> valor;
-	li $v0, 6
+	li 		$v0, 6
 	syscall
-	
 
 	#change_elto(matTrabajo, indFil, indCol, valor);
-	mov.s $f12, $f0 #almaceno el valor en el registro f12 para pasarlo como argumento
-	move $a1, $s7 # lo mismo con la dirección de la matriz y el resto de elementos
-	move $a2, $s4
-	move $a3, $s5
-	jal change_elto
-	j while
-	cambiar_valor_fin:
+	mov.s 	$f12, $f0 
+	move 	$a1, $s7 
+	move 	$a2, $s4
+	move 	$a3, $s5
+	jal 	change_elto
+	j 		while
+	change_value_end:
 	
 
 # std::cerr << "Error: dimension incorrecta.  Numero de fila incorrecto\n";
 error_fila:
-	li 	$v0, 4
-	la $a0, str_errorFil
+	li 		$v0, 4
+	la 		$a0, str_errorFil
 	syscall
 	#continue;
-	j while
+	j		 while
 #  std::cerr << "Error: dimension incorrecta.  Numero de columna incorrecto\n";
 error_columna:
-	li 	$v0, 4
-	la $a0, str_errorCol
+	li 		$v0, 4
+	la 		$a0, str_errorCol
 	syscall
 	#continue;
-	j while
+	j 		while
 
 cambiar_intercambiar_valor_elemento_fin:
 
@@ -569,41 +560,34 @@ cambiar_intercambiar_valor_elemento_fin:
 # $s1 --> índice columna mínimo
 # $f20 --> valor flotante mínimo
 encontrar_minimo:
-	move $a1, $s7
+	move 	$a1, $s7
 	#std::tie(valorMin, filaMin, columnaMin) = find_min(matTrabajo);
-	jal find_min
-	move $s0, $v0 
-	move $s1, $v1
-	mov.s $f20, $f0
-	
+	jal 	find_min
+	move 	$s0, $v0 
+	move 	$s1, $v1
+	mov.s 	$f20, $f0
 	#std::cout << "\nEl valor minimo esta en (" << filaMin << ','
-	li $v0, 4
-	la $a0, str_valMin
+	li 		$v0, 4
+	la 		$a0, str_valMin
 	syscall
-
-	li $v0, 1
-	move $a0, $s0
+	li 		$v0, 1
+	move 	$a0, $s0
 	syscall
-
 	# << ','
-	li $a0, 44
-	li $v0, 11
+	li 		$a0, 44
+	li 		$v0, 11
 	syscall
-	
 	#<< columnaMin <<") con valor " << valorMin;
-	li $v0, 1
-	move $a0, $s1
+	li 		$v0, 1
+	move 	$a0, $s1
 	syscall
-
-	li $v0, 4
-	la $a0, str_conValor
+	li 		$v0, 4
+	la 		$a0, str_conValor
 	syscall
-	
-	mov.s $f12, $f20
-	li $v0, 2
+	mov.s 	$f12, $f20
+	li 		$v0, 2
 	syscall
-
-	j while
+	j 		while
 encontrar_minimo_fin:
 
 
@@ -614,100 +598,92 @@ encontrar_minimo_fin:
 # $s7 --> dirección de la matriz
 ordenacion_burbuja:
 	
-	lw $s2, 0($s7) #filas
+	lw 		$s2, 0($s7) #filas
 	#std::cout << "\nIndice de fila: ";
-	li $v0, 4
-	la $a0, str_indFila
+	li 		$v0, 4
+	la 		$a0, str_indFila
 	syscall
-
 	#std::cin >> indFil;
-	li $v0, 5
+	li 		$v0, 5
 	syscall
-	move $s4, $v0
-
+	move 	$s4, $v0
 	#if ((indFil < 0) || (indFil >= matTrabajo->nFil)) {
-	slt $t0, $s4, $zero
-	sge $t1, $s4, $s2
-	or $t0, $t0, $t1
-	bnez $t0, error_fila
+	slt 	$t0, $s4, $zero
+	sge 	$t1, $s4, $s2
+	or 		$t0, $t0, $t1
+	bnez 	$t0, error_fila
+	move 	$a0, $s7 #dirección
+	move 	$a2, $s4 #índice fila
 
-	move $a0, $s7 #dirección
-	move $a2, $s4 #índice fila
-	
-	jal sort_row
+	jal 	sort_row
+	j 		while
 
-	j while
 ordenacion_burbuja_fin:
-
 
 sort_row:
 		
-	la $t0, 8($a0) #Primer elemento
-	lw $t1, 0($a0) #nFil
-	lw $t2, 4($a0) #nColum
+	la 		$t0, 8($a0) #Primer elemento
+	lw 		$t1, 0($a0) #nFil
+	lw 		$t2, 4($a0) #nColum
 	
-	addi $t3, $t2, -1 #nCol - 1
-	move $t9, $a2 #índice fila
+	addi	$t3, $t2, -1 #nCol - 1
+	move 	$t9, $a2 #índice fila
 
+	mul 	$t8, $t1,$t2
+	beqz 	$t8, salir_sort_row
 
-	
-	mul $t8, $t1,$t2
-	beqz $t8, salir_sort_row
-
-	move $t4, $zero # inicializo el índice de filas a 0 (i)
+	move 	$t4, $zero # inicializo el índice de filas a 0 (i)
 
 # for(int f = 0; f < nFil; f++) {
 for_sort: 
-	move $t5, $zero # inicializo el índice de columnas a 0 (j)
+	move 	$t5, $zero # inicializo el índice de columnas a 0 (j)
 	
 
 segundo_for_sort:
 	#hallo la posición del primer elemento
-	mul $t7, $a2, $t2 #nCol * índFila
-	add $t7, $t7, $t5 #nCol * indFila + j
-	mul $t7, $t7, sizeF
-	addu $t7, $t7, $t0
-	l.s $f4, 0($t7)
-
+	mul 	$t7, $a2, $t2 #nCol * índFila
+	add 	$t7, $t7, $t5 #nCol * indFila + j
+	mul 	$t7, $t7, sizeF
+	addu 	$t7, $t7, $t0
+	l.s 	$f4, 0($t7)
 	#hallo el del segundo
-	mul $t8, $t9, $t2
-	add $t8, $t8, $t5
-	addi $t8, $t8, 1
-	mul $t8, $t8, sizeF
-	addu $t8, $t8, $t0
-	l.s $f5, 0($t8)
-
+	mul 	$t8, $t9, $t2
+	add 	$t8, $t8, $t5
+	addi 	$t8, $t8, 1
+	mul 	$t8, $t8, sizeF
+	addu 	$t8, $t8, $t0
+	l.s 	$f5, 0($t8)
 	#comparo el valor de los dos
-	c.le.s $f4, $f5
-	bc1t salto_sort # si no se cumple que sea mayor se salta el if
-	move $a0, $t7
-	move $a3, $t8
+	c.le.s 	$f4, $f5
+	bc1t 	salto_sort # si no se cumple que sea mayor se salta el if
+	move 	$a0, $t7
+	move 	$a3, $t8
 	
-	addi $sp, $sp, -4
-	sw $ra, 0($sp)
-	jal swap
-	lw $ra, 0($sp)
-	addi $sp, $sp, 4
+	addi 	$sp, $sp, -4
+	sw 		$ra, 0($sp)
+	jal 	swap
+	lw 		$ra, 0($sp)
+	addi 	$sp, $sp, 4
 
 salto_sort:
 	
-	sub $t6, $t3, $t4 #nCol - 1 - i
-	addi $t5, $t5, 1 # j++
-	blt $t5, $t6, segundo_for_sort
+	sub 	$t6, $t3, $t4 #nCol - 1 - i
+	addi 	$t5, $t5, 1 # j++
+	blt 	$t5, $t6, segundo_for_sort
 
-	addi $t4, $t4, 1 # i++
-	blt $t4, $t3, for_sort
+	addi 	$t4, $t4, 1 # i++
+	blt 	$t4, $t3, for_sort
 
 
 salir_sort_row:
 
-	jr $ra
+	jr 		$ra
 sort_row_fin:
 
 termina_programa:
-	li $v0, 4
-	la $a0, str_termina
+	li 		$v0, 4
+	la 		$a0, str_termina
 	syscall
 	
-	li $v0, 10
+	li		 $v0, 10
 	syscall
