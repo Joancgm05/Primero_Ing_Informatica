@@ -137,32 +137,94 @@ str_matTiene:	.asciiz	"\n\nLa matriz tiene dimension "
 print_mat:
 	# Función para imprimir una matriz por consola
 	addi $sp, $sp, -32
-	sw $s0, 0($sp)
-	sw $s1, 4($sp)
-	sw $s2, 8($sp)
-	sw $s3, 12($sp)
-	sw $s4, 16($sp)
-	sw $s5, 20($sp)
-	sw $s6, 24($sp)
-	sw $ra, 28($sp)
+	sw 		$s0, 0($sp)  # Primer elemento de la matriz
+	sw 		$s1, 4($sp)  # Número de filas
+	sw 		$s2, 8($sp)  # Número de columnas
+	sw 		$s3, 12($sp) # Dirreción de la matriz
+	sw 		$s4, 16($sp) # tamaño de la matriz
+	sw 		$s5, 20($sp) # Índice de filas 
+	sw 		$s6, 24($sp) # Índice de columnas 
+	sw 		$ra, 28($sp)
 
 	move $s3, $a1
-	la $s0, 8($s3) # Primer elemento de la matriz
-	lw $s1, 0($s3) # Número de filas
-	lw $s2, 4($s3) # Número de columnas
-	# std::cout << "\n\nLa matriz tiene dimension " 
-	li $v0, 4
-	la $a0, str_matTiene
+	la 		$s0, 8($s3) # Primer elemento de la matriz
+	lw 		$s1, 0($s3) # Número de filas
+	lw 		$s2, 4($s3) # Número de columnas
+
+	# std::cout << "\n\nLa matriz tiene dimension " << nFil << 'x' << nCol << '\n';
+	# std::cout << "\n\nLa matriz tiene dimension "
+	li 		$v0, 4
+	la 		$a0, str_matTiene
 	syscall
 	# << nFil
-	move $a0, $s1
-	li $v0, 1
+	move 	$a0, $s1
+	li 		$v0, 1
 	syscall
 	# << "x"
-	li $a0, 120
-	li $v0, 11
+	li 		$a0, 120
+	li 		$v0, 11
 	syscall
 	# << nCol
-	move $a0, $s2
-	li $v0, 1
+	move 	$a0, $s2
+	li 		$v0, 1
 	syscall
+	# << '|n'
+	li 		$a0, 10
+	li 		$v0, 11
+	syscall
+
+	mul 	$s4, $s1, $s2 # Tamaño de la matriz
+	beqz 	$s4, next_instruction
+	move 	$s5, $zero # Se inicializa el índice de filas a 0
+	move 	$s6, $zero # Se inicializa el índice de columnas a 0
+
+# for(int f = 0; f < nFil; f++) {
+for_print_mat:
+	l.s 	$f4, 0($s0) # Cargo en f4 el flotante que se encuentra en $s0
+	
+	# std::cout << elem[f*nCol + c] << ' ';
+	li 		$v0, 2
+	mov.s 	$f12, $f4
+	syscall
+
+	li 		$v0, 11
+	li 		$a0, 32
+	syscall
+
+
+	addi  	$s0, $s0, sizeF
+	addi 	$s5, $s5, 1 # Se añade 1 al índice de filas
+	addi 	$s6, $s6, 1 # Se añade 1 al índice de columnas
+	bne		$s6, $s2, print_line_jump
+	move  	$s6, $zero # Se inicializa el índice de columnas a 0
+	
+	# std::cout << '\n';
+	li		$v0, 11
+	li 		$a0, 10
+	syscall
+
+print_line_jump:
+
+	blt 	$s5, $s4, for_print_mat # Si el índice de filas no ha llegado al número total de elementos de la matriz salta al for
+	
+	# std::cout << '\n';
+	li 		$v0, 11
+	li 		$a0, 10
+	syscall
+
+next_instruction:
+
+	lw 		$s0, 0($sp)
+	lw		$s1, 4($sp)
+	lw		$s2, 8($sp)
+	lw		$s3, 12($sp)
+	lw		$s4, 16($sp)
+	lw		$s5, 20($sp)
+	lw		$s6, 24($sp)
+	lw		$ra, 28($sp)
+	addi	$sp, $sp, 32
+	jr 		$ra
+
+print_mat_end:
+
+
