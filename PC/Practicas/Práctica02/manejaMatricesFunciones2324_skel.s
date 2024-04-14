@@ -225,6 +225,84 @@ next_instruction:
 	addi	$sp, $sp, 32
 	jr 		$ra
 
-print_mat_end:
+print_mat_fin:
 
+# subrutina CHANGE ELEMENT 
 
+# $a1 = Dirección de la matriz
+# $a2 = Filas del elemento
+# $a3 = Columnas del elemento
+# $f2 = Flotante
+
+change_elto:
+
+	la 		$t0, 8($a1) # Se carga en $t0 el primer elemento de la matriz
+	lw 		$t1, 4($a1) # Numero de columnas
+
+	mul 	$t2, $a2, $t1 # [indF * numCOl
+	addu	$t2, $t2, $a3 # [indF * numCol + indC]
+	mul 	$t2, $t2, sizeF # Se le multiplica el tamaño del flotante ($t2 * 4)
+	addu 	$t2, $t2, $t0 # Se carga la dirección en $t2
+
+	s.s 	$f12, 0($t2) # Almaceno la dirección del flotante seleccionado
+	jr		$ra
+
+change_elto_fin:
+
+# subrutina SWAP
+# $a0 Se almacena la dirección del primer elemento
+# $a3 Se almacena la dirección del segundo elemento
+
+swap:
+
+	l.s 	$f4, 0($a0) # float temp1 = *e1;
+	l.s 	$f5, 0($a3) # float temp2 = *e2;
+	s.s 	$f5, 0($a0) # *e1 = temp2;
+	s.s 	$f4. 0($a3) # *e2 = temp1;
+	jr 		$ra
+
+swap_fin:
+
+#subrutina INTERCAMBIA
+# $a1 Almacena la dirección de la matriz
+# $a2 ALmacena las filas del elmento
+# $a3 Almacena las filas del elmento
+
+intercambia:
+
+	la 		$t0, 8($a1) # Se carga en $t0 el primer elemento de la matriz
+	lw		$t1, 4($a1) # Se carga en $t1 el número de columnas
+	lw 		$t2, 0($a1) # Se carga en $t2 el número de filas
+	#float* e1 = &datos[indF * numCol + indC];
+	mul 	$t5, $a2, $t1 # [indF * numCol
+	addu 	$t5, $t5, $a3 # [indF * numCol + indC]
+	mul 	$t5, $t5, sizeF # Se le multiplica el tamaño del flotante (4)
+	addu 	$t3, $t0, $t5 # Almacena la nueva dirección
+	move 	$a0, $t3
+	
+	#float* e2 = &datos[(numFil - indF - 1) * numCol + (numCol - indC - 1)];
+	sub $t8, $t1, $a2 # numFil - indF
+	li $t7, 1
+	sub $t8, $t8, $t7 # [(numFil - indF - 1)
+	mul $t8, $t8, $t2 # [(numFil - indF - 1) * numCol
+	sub $t4, $t2, $a3 # (numCol - indC
+	sub $t4, $t4, $t7 # (numCol - indC - 1)]
+	addu $t8, $t8, $t4 # [(numFil - indF - 1) * numCol + (numCol - indC - 1)]
+	mul $t8, $t8, sizeF # Se multiplica por el tamaño del flotante (4)
+	addu $t8, $t8, $t0 # Se almacena la dirección
+	move $a3, $t8
+	
+	# Pila para almacenar la dirección
+	addi $sp, $sp, -4 
+	sw $ra, 0($sp)
+
+	# Vuelvo a llamar a la función
+	jal swap 
+
+	# Recupero la dirección almacenada en la pila
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+
+	jr $ra
+
+intercambia_fin:
