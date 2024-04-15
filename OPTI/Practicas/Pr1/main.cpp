@@ -27,6 +27,7 @@ void menu (unsigned dirigido, char& opcion)
             cout << "y. Mostrar la matriz de ad[y]acencia del grafo" << endl;
             cout << "m. Realizar un recorrido en a[m]plitud del grafo desde un nodo por sucesores" << endl;
             cout << "r. Realizar un recorrido en p[r]ofundidad del grafo desde un nodo por sucesores" << endl;
+            cout << "k. Mostrar arbol generador de minimo coste, [k]ruskal" << endl;
     }
     cout << "q. Finalizar el programa" << endl;
     cout << "Introduce la letra de la accion a ejecutar  > ";
@@ -135,6 +136,13 @@ int main(int argc, char *argv[]) {
                         system("cls");
                         cout << "Esta es la lista de predecesores de " << nombrefichero << endl;
                         G.Mostrar_Listas(-1);
+                        system("pause");
+                        system("cls");
+                        break;
+                    case 'k' :
+                        system("cls");
+                        cout << "Mostrar arbol generador de minimo coste" << endl;
+                        G.Kruskal();
                         system("pause");
                         system("cls");
                         break;

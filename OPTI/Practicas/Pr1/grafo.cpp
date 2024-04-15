@@ -255,6 +255,60 @@ void GRAFO::MostrarCamino(int s, int i, vector<unsigned>& pred) {
     }
 }
 
+void GRAFO::Kruskal() {
+  vector<AristaPesada> Aristas; // creamos un vector de tipo AristaPesada
+  AristaPesada dummy; // objeto dummy
+  for (unsigned i = 0; i < n; ++i) { // cargamos las aristas de la lista de adyacencia
+    for (unsigned j = 0; j < LS[i].size(); ++j) {
+      if (i < LS[i][j].j) {
+        dummy.extremo1 = i; // sus extremos
+        dummy.extremo2 = LS[i][j].j; 
+        dummy.peso = LS[i][j].c; // su coste o peso 
+        Aristas.emplace_back(dummy); // añadimos dummy al vector Aristas
+      }
+    }
+  }
+  // Ordenamos el vector Aristas según el peso de las aristas
+  AristaPesada actual{};
+  for (unsigned i = 0; i < Aristas.size(); ++i) { // recorremos el vector
+    actual = Aristas[i]; // denominamos actual a la posicion de Aristas en i
+    for (unsigned j = i; j < Aristas.size(); ++j) { // iniciamos j en i, por lo que vamos cogiendo los siguientes
+      if (Aristas[j].peso < actual.peso) { // si el peso de la posicion j es menor que en la i
+        actual = Aristas[j]; // adquirimos el valor de este coste
+        Aristas[j] = Aristas[i]; // posicionamos este coste donde estaba el anterior
+        Aristas[i] = actual; // intercambiamos, obteniendo un valor menor.
+        // Al final el vector Aristas quedara ordenado de minimo coste
+      }
+    }
+  }
+
+  // Registro de componentes conexas
+  vector<unsigned> Raiz; // creamos el vector raiz
+  Raiz.resize(n); // lo redimensionamos con el numero de aristas
+  for (unsigned q = 0; q < n; ++q) {
+    Raiz[q] = q; // llenamos el vector raiz con el numero de aristas
+  }
+
+  // Kruskal completo
+  vector<AristaPesada> MST; // construimos el vector arbol generador de minimo coste  
+  unsigned l{0}, coste_total{0}; // iterador y coste total
+  while (MST.size() < n - 1) { // mientras MST no llegue al final
+    if (Raiz[Aristas[l].extremo1] != Raiz[Aristas[l].extremo2]) { // Si raiz[i] <> raiz[j]
+      unsigned kill = Raiz[Aristas[l].extremo1]; // kill = raiz[i]
+      for (int i = 0; i < Raiz.size(); ++i) { // recorremos el vector Raiz
+        if (Raiz[i] == kill) { // si coincide la posicion del vector con el valor
+          Raiz[i] = Raiz[Aristas[l].extremo2]; // posicion raiz adquiere el valor del extremo2
+        }
+      }
+      MST.emplace_back(Aristas[l]); // añadimos al vector MST las aristas completas
+      coste_total += Aristas[l].peso; // a estas aristas le vamos sumando el peso e imrpimimos
+      cout << "Arista numero " << MST.size() << " incorporada (" << Aristas[l].extremo1 + 1 << ", " << Aristas[l].extremo2 + 1 << "), con peso " << Aristas[l].peso << endl;
+    }
+    ++l; // sumamos al iterador
+  }
+  cout << "El peso del arbol generador de minimo coste es " << coste_total << endl;
+  cout << endl;
+}
 
 
 
