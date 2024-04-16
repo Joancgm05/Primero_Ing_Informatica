@@ -258,21 +258,24 @@ void GRAFO::RecorridoAmplitud() //Construye un recorrido en amplitud desde un no
   }
 }
 
-void GRAFO::Kruskal() {
-  vector<AristaPesada> Aristas; // creamos un vector de tipo AristaPesada
-  AristaPesada dummy; // objeto dummy
-  for (unsigned i = 0; i < n; ++i) { // cargamos las aristas de la lista de adyacencia
-    for (unsigned j = 0; j < LS[i].size(); ++j) {
-      if (i < LS[i][j].j) {
-        dummy.extremo1 = i; // sus extremos
+void GRAFO::Kruskal() { 
+
+  // Creamos un vector de aristas 
+  vector<AristaPesada> Aristas; // vector de aristas pesadas
+  AristaPesada dummy; // creamos un objeto de tipo arista pesada
+  for (unsigned i = 0; i < n; ++i) { // Cargamos las aristas de la lista de adyacencia
+    for (unsigned j = 0; j < LS[i].size(); ++j) { // recorremos las aristas
+      if (i < LS[i][j].j) { // si el nodo es menor que el nodo j
+        dummy.extremo1 = i; 
         dummy.extremo2 = LS[i][j].j; 
-        dummy.peso = LS[i][j].c; // su coste o peso 
-        Aristas.emplace_back(dummy); // añadimos dummy al vector Aristas
+        dummy.peso = LS[i][j].c; // asignamos el peso
+        Aristas.emplace_back(dummy); // añadimos al vector de aristas
       }
     }
   }
+
   // Ordenamos el vector Aristas según el peso de las aristas
-  AristaPesada actual{};
+  AristaPesada actual{}; // creamos un objeto de tipo arista pesada
   for (unsigned i = 0; i < Aristas.size(); ++i) { // recorremos el vector
     actual = Aristas[i]; // denominamos actual a la posicion de Aristas en i
     for (unsigned j = i; j < Aristas.size(); ++j) { // iniciamos j en i, por lo que vamos cogiendo los siguientes
@@ -286,29 +289,39 @@ void GRAFO::Kruskal() {
   }
 
   // Registro de componentes conexas
-  vector<unsigned> Raiz; // creamos el vector raiz
+  vector<unsigned> Raiz; // creamos un vector de tipo unsigned
   Raiz.resize(n); // lo redimensionamos con el numero de aristas
   for (unsigned q = 0; q < n; ++q) {
     Raiz[q] = q; // llenamos el vector raiz con el numero de aristas
   }
 
-  // Kruskal completo
-  vector<AristaPesada> MST; // construimos el vector arbol generador de minimo coste  
-  unsigned l{0}, coste_total{0}; // iterador y coste total
-  while (MST.size() < n - 1) { // mientras MST no llegue al final
-    if (Raiz[Aristas[l].extremo1] != Raiz[Aristas[l].extremo2]) { // Si raiz[i] <> raiz[j]
-      unsigned kill = Raiz[Aristas[l].extremo1]; // kill = raiz[i]
-      for (int i = 0; i < Raiz.size(); ++i) { // recorremos el vector Raiz
-        if (Raiz[i] == kill) { // si coincide la posicion del vector con el valor
-          Raiz[i] = Raiz[Aristas[l].extremo2]; // posicion raiz adquiere el valor del extremo2
+vector<AristaPesada> MST; //construimos el árbol de mínimo coste
+  unsigned z{0}, j{0}, coste_arbol{0}; //inicializamos el coste del árbol y el iterador
+  //j es un iterador para que en caso de que no se llene MST del todo pero se hayan recorrido todos las aristas, pueda salir del bucle
+  while (MST.size() < n - 1) { //mientras el tamaño del árbol sea menor que el de los nodos - 1 porque el camino óptimo de aristas siempre será el número de nodos menos 1
+    if (Raiz[Aristas[z].extremo1] != Raiz[Aristas[z].extremo2]) { //comparamos que las raices son distintas para no unir elementos de la misma componente conexa ya que provocaría un ciclo
+      unsigned kill = Raiz[Aristas[z].extremo1]; //guardamos la raiz del primer extremo
+      for (int i{0}; i < Raiz.size(); i++) { //recorremos las raices y aquellas que sean iguales a kill las sustituimos por la del otro extremo, formando una componente conexa mayor
+        if (Raiz[i] == kill) {
+            Raiz[i] = Raiz[Aristas[z].extremo2];
         }
       }
-      MST.emplace_back(Aristas[l]); // añadimos al vector MST las aristas completas
-      coste_total += Aristas[l].peso; // a estas aristas le vamos sumando el peso e imrpimimos
-      cout << "Arista numero " << MST.size() << " incorporada (" << Aristas[l].extremo1 + 1 << ", " << Aristas[l].extremo2 + 1 << "), con peso " << Aristas[l].peso << endl;
+      MST.emplace_back(Aristas[z]); //guardamos la arista en el árbol
+      coste_arbol += Aristas[z].peso; //aumentamos el peso/coste en base al costo/peso de la arista
+      cout << "Arista número " << MST.size() << " incorporada (" << Aristas[z].extremo1 + 1 << ", " << Aristas[z].extremo2 + 1 << "), con peso " << Aristas[z].peso << endl;
     }
-    ++l; // sumamos al iterador
+    z++;
+    j++;
+    if (j == Aristas.size()) {
+        break;
+    }
   }
-  cout << "El peso del arbol generador de minimo coste es " << coste_total << endl;
-  cout << endl;
+
+  if (MST.size() == n - 1) { //si el tamaño del árbol es igual al número de nodos - 1, el grafo es conexo
+     cout << "El grafo es conexo." << endl;
+    cout << "El peso del Árbol generador de mínimo coste es " << coste_arbol << endl;
+  } else { //si no, no es conexo
+        cout << "El grafo es no conexo." << endl;
+  }
+    cout << endl;
 }
