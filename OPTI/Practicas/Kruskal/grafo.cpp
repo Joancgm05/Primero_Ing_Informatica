@@ -264,7 +264,7 @@ void GRAFO::Kruskal() {
   vector<AristaPesada> Aristas; // vector de aristas pesadas
   AristaPesada dummy; // creamos un objeto de tipo arista pesada
   for (unsigned i = 0; i < n; ++i) { // Cargamos las aristas de la lista de adyacencia
-    for (unsigned j = 0; j < LS[i].size(); ++j) { // recorremos las aristas
+    for (unsigned j = 0; j < LS[i].size(); ++j) { 
       if (i < LS[i][j].j) { // si el nodo es menor que el nodo j
         dummy.extremo1 = i; 
         dummy.extremo2 = LS[i][j].j; 
