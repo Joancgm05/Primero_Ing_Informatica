@@ -300,7 +300,7 @@ vector<AristaPesada> MST; //construimos el árbol de mínimo coste
   //j es un iterador para que en caso de que no se llene MST del todo pero se hayan recorrido todos las aristas, pueda salir del bucle
   while (MST.size() < n - 1) { //mientras el tamaño del árbol sea menor que el de los nodos - 1 porque el camino óptimo de aristas siempre será el número de nodos menos 1
     if (Raiz[Aristas[z].extremo1] != Raiz[Aristas[z].extremo2]) { //comparamos que las raices son distintas para no unir elementos de la misma componente conexa ya que provocaría un ciclo
-      unsigned kill = Raiz[Aristas[z].extremo1]; //guardamos la raiz del primer extremo
+      unsigned kill = Raiz[Aristas[z].extremo1]; // kill = raiz[i]
       for (int i{0}; i < Raiz.size(); i++) { //recorremos las raices y aquellas que sean iguales a kill las sustituimos por la del otro extremo, formando una componente conexa mayor
         if (Raiz[i] == kill) {
             Raiz[i] = Raiz[Aristas[z].extremo2];
