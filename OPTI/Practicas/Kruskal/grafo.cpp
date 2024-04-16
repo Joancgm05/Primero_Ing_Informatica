@@ -275,14 +275,14 @@ void GRAFO::Kruskal() {
   }
 
   // Ordenamos el vector Aristas según el peso de las aristas
-  AristaPesada actual{}; // creamos un objeto de tipo arista pesada
+  AristaPesada posicion_primera{}; // creamos un objeto de tipo arista pesada
   for (unsigned i = 0; i < Aristas.size(); ++i) { // recorremos el vector
-    actual = Aristas[i]; // denominamos actual a la posicion de Aristas en i
+    posicion_primera = Aristas[i]; // denominamos actual a la posicion de Aristas en i
     for (unsigned j = i; j < Aristas.size(); ++j) { // iniciamos j en i, por lo que vamos cogiendo los siguientes
-      if (Aristas[j].peso < actual.peso) { // si el peso de la posicion j es menor que en la i
-        actual = Aristas[j]; // adquirimos el valor de este coste
+      if (Aristas[j].peso < posicion_primera.peso) { // si el peso de la posicion j es menor que en la i
+        posicion_primera = Aristas[j]; // adquirimos el valor de este coste
         Aristas[j] = Aristas[i]; // posicionamos este coste donde estaba el anterior
-        Aristas[i] = actual; // intercambiamos, obteniendo un valor menor.
+        Aristas[i] = posicion_primera; // intercambiamos, obteniendo un valor menor.
         // Al final el vector Aristas quedara ordenado de minimo coste
       }
     }
