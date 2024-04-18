@@ -49,3 +49,4 @@ template <class T> std::ostream& dll_node_t<T>::write(std::ostream& os) const { 
 }
 
 #endif  // DLL_NODET_H_
+
