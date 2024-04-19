@@ -18,7 +18,8 @@
 #include "queue_l_t.h"
 
 // Clase RPN (Reverse Polish Notation)
-template <class T> class rpn_t {
+template <class T> 
+class rpn_t {
  public:
   // constructor
  rpn_t(void) : stack_() {}
@@ -27,11 +28,11 @@ template <class T> class rpn_t {
   ~rpn_t() {}
 
   // operaciones
-  const int evaluate(queue_l_t<char>&);
+  const int evaluate(queue_l_t<char>&); // evalúa una expresión en notación polaca inversa
 
  private: 
-  T stack_;
-  void operate_(const char operador);
+  T stack_; // pila de la calculadora
+  void operate_(const char operador); // realiza una operación
 };
 
 
@@ -46,34 +47,117 @@ template<class T> const int rpn_t<T>::evaluate(queue_l_t<char>& q) {
     if (isdigit(c)) {
       int i = c - '0';
       // poner código
+      stack_.push(i);
       std::cout << " (es un dígito) " << std::endl
 		<< "   Lo metemos en la pila..." << std::endl;
     } else {
       std::cout << " (es un operador)" << std::endl;
       // poner código
+      operate_(c);
     }
   }
   // poner código
+  return stack_.top();
 }
 
-template<class T> void rpn_t<T>::operate_(const char c) {
-  assert(c == '+' || c == '-' || c == '*' || c == '/');
+template <class T>
+void rpn_t<T>::operate_(const char c) {  // int operand1, int operand2
+  assert(c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == 'r' || // + suma, - resta, * multiplicación, / división, ^ potencia, r raíz cuadrada
+         c == 'c' || c == 'l' || c == '%' || c == '<' || c == '>' || c == 'n' || // c cuadrado, l logaritmo base 2, % módulo, < menor que, > mayor que, n negativo
+         c == 'L' || c == 'C' || c == 'S' || c == 'T' || c == 'b' || c == 'h' ); // L ln, C coseno, S seno, T tangente, b raiz cubica, h raíz cuadrada de la suma de los cuadrados de dos nº
+  // poner código
+  double result;
+  double second_term = stack_.top();  // extraemos el top de la pila
+  stack_.pop();                       // volvemos a extraer
 
-  // poner código
-  std::cout << "   Sacamos de la pila un operando: " << std::endl;
-  
-  // poner código
-  std::cout << "   Sacamos de la pila otro operando: " << std::endl;
-  
-  switch (c) {
-    case '+':
-      // poner código
-      break;
-    // poner código resto de operadores
+  std::cout << "   Sacamos de la pila un operando: " << second_term << std::endl;
+  if (c == 'r' || c == 'l' || c == 'c' || c == 'n' || c == 'L' || c == 'C' || 
+      c == 'S' || c == 'T' || c == 'b'){
+    switch (c) {
+      case 'r':
+        result = sqrt(second_term);
+        break;
+      case 'c':
+        result = pow(second_term, 2);
+        break;
+      case 'l':
+        result = log2(second_term);
+        break;
+      case 'n':
+        result = -second_term;
+        break;
+      case 'L':
+        result = log(second_term);
+        break;
+      case 'C':
+        result = cos(second_term);
+        break;
+      case 'S':
+        result = sin(second_term);
+        break;
+      case 'T':
+        result = tan(second_term);
+        break;
+      case 'b':
+        result = cbrt(second_term);
+        break;
+      default:
+        std::cout << "No se insertó ningún carácter válido para operar" << std::endl;
+        exit(EXIT_SUCCESS);
+    }
+    stack_.push(result);  // devolvemos el resultado
+    std::cout << "Metemos en la pila el resultado: " << result << std::endl;
   }
-
   // poner código
-  std::cout << "   Metemos en la pila el resultado: " << std::endl;
+  else {
+    int top_term = stack_.top();
+    stack_.pop();
+    std::cout << "Sacamos de la pila otro operando: " << top_term << std::endl;
+
+    switch (c) {
+      case '+':
+        // poner código
+        result = top_term + second_term;
+        break;
+        // poner código resto de operadores
+      case '-':
+        result = top_term - second_term;
+        break;
+      case '*':
+        result = top_term * second_term;
+        break;
+      case '/':
+        result = top_term / second_term;
+        break;
+      case '^':
+        result = pow(top_term, second_term);
+        break;
+      case '%':
+        result = (top_term / 100) * second_term;
+        break;
+      case '<':
+        if (top_term < second_term) {
+          result = top_term;
+        } else {
+          result = second_term;
+        }
+        break;
+      case '>':
+        if (top_term > second_term) {
+          result = top_term;
+        } else {
+          result = second_term;
+        }
+        break;
+      case 'h':
+        result = hypot(top_term, second_term);
+        break;
+    }
+
+    // poner código
+    stack_.push(result);  // devolvemos el resultado
+    std::cout << "Metemos en la pila el resultado: " << result << std::endl;
+  }
 }
 
  

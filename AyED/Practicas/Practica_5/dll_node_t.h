@@ -16,8 +16,8 @@
 template <class T> class dll_node_t {
  public:
   // constructores
-  dll_node_t() : prev_(NULL), data_(), next_(NULL) {}  // por defecto
-  dll_node_t(const T& data) : prev_(NULL), data_(data), next_(NULL) {} // parametrizado
+  dll_node_t() : prev_(NULL), data_(), next_(NULL) {}  // Constructor por defecto
+  dll_node_t(const T& data) : prev_(NULL), data_(data), next_(NULL) {} // Constructor con parámetros
 
   // destructor
   ~dll_node_t(void) {} 

@@ -26,22 +26,22 @@ template<class T> class stack_l_t {
   ~stack_l_t(void) {}
 
   // operaciones
-  void push(const T&);
-  void pop(void);
-  const T& top(void) const;
-  bool empty(void) const;
+  void push(const T&); // añade un elemento a la pila
+  void pop(void); // elimina un elemento de la pila
+  const T& top(void) const; // devuelve el elemento superior de la pila
+  bool empty(void) const; // comprueba si la pila está vacía
 
   // E/S	
-  std::ostream& write(std::ostream& os = std::cout) const;
+  std::ostream& write(std::ostream& os = std::cout) const; // imprime la pila
 
 private:
-  dll_t<T> l_;
+  dll_t<T> l_; // lista doblemente enlazada
 };
 
 
 // operaciones
 template<class T> void stack_l_t<T>::push(const T& dato) {
-  dll_node_t<T>* nodo = new dll_node_t<T>(dato);
+  dll_node_t<T>* nodo = new dll_node_t<T>(dato); // Creamos un nodo con el dato
   assert(nodo != NULL);
   l_.push_front(nodo);
 }

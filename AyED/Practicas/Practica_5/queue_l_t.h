@@ -18,7 +18,7 @@
 // Clase TAD cola implementada con una lista
 template <class T> class queue_l_t {
  private:
-  dll_t<T>    l_;
+  dll_t<T>    l_; // lista doblemente enlazada
 
  public:
   // constructor
@@ -28,15 +28,15 @@ template <class T> class queue_l_t {
   ~queue_l_t(void) {}
 
   // operaciones
-  bool empty(void) const;
-  int size(void) const;
-  void push(const T& dato);
-  void pop(void);
-  const T& front(void) const;
-  const T& back(void) const;
+  bool empty(void) const; // comprueba si la cola está vacía
+  int size(void) const; // devuelve el tamaño de la cola
+  void push(const T& dato); // añade un elemento a la cola
+  void pop(void); // elimina un elemento de la cola
+  const T& front(void) const; // devuelve el primer elemento de la cola
+  const T& back(void) const; // devuelve el último elemento de la cola
 
   // E/S
-  std::ostream& write(std::ostream& os = std::cout) const;
+  std::ostream& write(std::ostream& os = std::cout) const; // imprime la cola
 };
 
 
@@ -50,7 +50,7 @@ template<class T> int queue_l_t<T>::size(void) const {
 }
 
 template<class T> void queue_l_t<T>::push(const T& dato) {
-  dll_node_t<T>* node = new dll_node_t<T>(dato);
+  dll_node_t<T>* node = new dll_node_t<T>(dato); // Creamos un nodo con el dato
   assert(node != NULL);
   l_.push_front(node);
 }

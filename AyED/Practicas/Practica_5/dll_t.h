@@ -25,28 +25,28 @@ template <class T> class dll_t {
   ~dll_t(void); 
 
   // getters
-  dll_node_t<T>* get_tail(void) const { return tail_; }
-  dll_node_t<T>* get_head(void) const { return head_; }
-  int get_size(void) const { return sz_; }
+  dll_node_t<T>* get_tail(void) const { return tail_; } // devuelve el nodo final de la lista doblemente enlazada
+  dll_node_t<T>* get_head(void) const { return head_; } // devuelve el nodo inicial de la lista doblemente enlazada
+  int get_size(void) const { return sz_; } // devuelve el tamaño de la lista doblemente enlazada
 
-  bool empty(void) const;
+  bool empty(void) const; // comprueba si la lista doblemente enlazada está vacía
 
   // operaciones
-  void push_back(dll_node_t<T>*);
-  void push_front(dll_node_t<T>*);
+  void push_back(dll_node_t<T>*); // añade un nodo al final de la lista doblemente enlazada
+  void push_front(dll_node_t<T>*); // añade un nodo al principio de la lista doblemente enlazada
 
-  dll_node_t<T>* pop_back(void);
-  dll_node_t<T>* pop_front(void);
+  dll_node_t<T>* pop_back(void); // elimina el nodo final de la lista doblemente enlazada
+  dll_node_t<T>* pop_front(void); // elimina el nodo inicial de la lista doblemente enlazada
 
-  dll_node_t<T>* erase(dll_node_t<T>*);
+  dll_node_t<T>* erase(dll_node_t<T>*); // elimina un nodo de la lista doblemente enlazada
 
   // E/S
-  std::ostream& write(std::ostream& = std::cout) const;
+  std::ostream& write(std::ostream& = std::cout) const; // imprime la lista doblemente enlazada
 
  private:
-  dll_node_t<T>* head_;
-  dll_node_t<T>* tail_;
-  int            sz_;
+  dll_node_t<T>* head_; // nodo inicial de la lista doblemente enlazada
+  dll_node_t<T>* tail_; // nodo final de la lista doblemente enlazada
+  int            sz_; // tamaño de la lista doblemente enlazada
 };
 
 
