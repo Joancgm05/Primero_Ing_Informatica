@@ -53,11 +53,11 @@ template<class T> const int rpn_t<T>::evaluate(queue_l_t<char>& q) {
     } else {
       std::cout << " (es un operador)" << std::endl;
       // poner código
-      operate_(c);
+      operate_(c); // operamos
     }
   }
   // poner código
-  return stack_.top();
+  return stack_.top(); // devolvemos el resultado
 }
 
 template <class T>
