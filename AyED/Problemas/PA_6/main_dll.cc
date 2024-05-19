@@ -87,5 +87,75 @@ int main(void) {
   lista.write();
   cout << endl;
 
+  // PROBLEMAS
+  // Insertar un nodo después de otro pasado por parámetro
+  lista.insert_after(lista.get_head(), new dll_node_t<char>('|'));
+  cout << "Inserta en segunda posición el caracter '|'" << endl;
+  
+  // Impresión de la lista elemento a elemento
+  lista.write();
+  cout << endl;
+
+  lista.insert_after(lista.get_tail(), new dll_node_t<char>('/'));
+  cout << "Inserta en la última posición el caracter '/'" << endl;
+
+  // Impresión de la lista elemento a elemento
+  lista.write();
+  cout << endl;
+
+  // Intercambiar el orden del elemento último y penúltimo de una lista
+  lista.swap_lasts();
+  cout << "Intercambiado el orden entre último y penúltimo" << endl;
+
+  // Impresión de la lista elemento a elemento
+  lista.write();
+  cout << endl;
+
+  // Duplicar todos los elementos de una lista insertando todas las
+  // copias seguidas al final de la lista original
+  lista.duplicate_end();
+  cout << "Duplicado elementos de lista y puestos al final" << endl;
+
+  // Impresión de la lista elemento a elemento
+  lista.write();
+  cout << endl;
+
+  // Eliminar y liberar todos los elementos de posiciones impares de una lista
+  lista.erase_odds();
+  cout << "Eliminados y liberados elementos de posiciones impares" << endl;
+
+  // Impresión de la lista elemento a elemento
+  lista.write();
+  cout << endl;
+
+  // Eliminar y liberar todos los elementos de posiciones impares de una lista
+  lista.erase_odds();
+  cout << "Nuevamente eliminados y liberados elementos de posiciones impares" << endl;
+
+  // Impresión de la lista elemento a elemento
+  lista.write();
+  cout << endl;
+  
+  // Eliminar los nodos de posiciones pares de una lista trasladándolos en
+  // el mismo orden a una nueva lista
+  dll_t<char> lista_pares = lista.move_evens();
+  cout << "Movidos elementos de posiciones pares a lista de pares" << endl;
+  cout << "lista de pares: ";
+  lista_pares.write(cout);
+  cout << endl;
+  cout << "lista original: ";
+  lista.write(cout);
+  cout << endl;
+
+  dll_t<char> lista_pares2 = lista.move_evens();
+  cout << "Movidos nuevamente elementos de posiciones pares a lista de pares 2";
+  cout << endl;
+  cout << "lista de pares2: ";
+  lista_pares2.write(cout);
+  cout << endl;
+  cout << "lista original: ";
+  lista.write(cout);
+  cout << endl;
+  
   return 0;
 }

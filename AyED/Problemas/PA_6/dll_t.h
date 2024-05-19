@@ -43,6 +43,13 @@ template <class T> class dll_t {
   // E/S
   std::ostream& write(std::ostream& = std::cout) const;
 
+  // Problemas
+  void insert_after(dll_node_t<T>*, dll_node_t<T>*);
+  void swap_lasts(void);
+  void duplicate_end(void);
+  void erase_odds(void);
+  dll_t<T> move_evens(void);
+  
  private:
   dll_node_t<T>* head_;
   dll_node_t<T>* tail_;
@@ -158,16 +165,66 @@ template <class T> std::ostream& dll_t<T>::write(std::ostream& os) const {
   return os;
 }
 
-// insertar un nodo despues de otro por parametros
-template <class T> void insert_after(dll_node_t<T>* nodo, dll_node_t<T>* nodo2) {
-  assert(nodo != NULL);
-  assert(nodo2 != NULL);
+// PROBLEMAS
 
-  nodo->set_next(nodo2->get_next());
-  nodo->set_prev(nodo2);
-  if (nodo2->get_next() != NULL)
-    nodo2->get_next()->set_prev(nodo);
-  nodo2->set_next(nodo);
+// Insertar un nodo después de otro pasado por parámetro
+template <class T> void dll_t<T>::insert_after(dll_node_t<T>* prev,
+					       dll_node_t<T>* n) {
+  assert(prev != NULL && n != NULL);
+
+  n->set_next(prev->get_next());  // Siguiente n apunte a sig. prev
+  prev->set_next(n);  // Siguiente de prev apunte a n
+  n->set_prev(prev);  // Previo de n apunte a prev
+  if (n->get_next() != NULL)  // Si n no quedará como último nodo 
+    n->get_next()->set_prev(n);  // Previo de siguiente de n apunte a n
+  else
+    tail_ = n;  // n último nodo
+  sz_++;
+}
+
+// Intercambiar el orden del elemento último y penúltimo de una lista
+template <class T> void dll_t<T>::swap_lasts(void) {
+  assert(!empty());
+  assert(get_head()->get_next() != NULL);
+  // Sacar el penúltimo y meterlo por la cola
+  push_back(erase(get_tail()->get_prev()));
+}
+
+// Duplicar todos los elementos de una lista insertando todas las
+// copias seguidas al final de la lista original
+template <class T> void dll_t<T>::duplicate_end(void) {
+  dll_node_t<T>* aux = get_head();
+  dll_node_t<T>* end = get_tail();
+  if (!empty())
+    while (aux->get_prev() != end) {  // Recorrer toda la lista inicial
+      // Insertar un nodo por la cola duplicando sus campo dato
+      push_back(new dll_node_t<T>(aux->get_data()));
+      aux = aux->get_next();  // Adelantar aux
+    }
+}
+
+// Eliminar y liberar todos los elementos de posiciones impares de una lista
+template <class T> void dll_t<T>::erase_odds(void) {
+  dll_node_t<T>* aux = get_head();
+  while (aux != NULL) {  // Recorrer toda la lista
+    dll_node_t<T>* next = aux->get_next();  // Avanzar next al siguente par
+    delete erase(aux);  // Borrar el aux y liberarlo
+    aux = next != NULL ? next->get_next() : next;  // Avanzar aux al sig. impar
+  }
+}
+
+// Eliminar los nodos de posiciones pares de una lista trasladándolos en
+// el mismo orden a una nueva lista
+template <class T> dll_t<T> dll_t<T>::move_evens(void) {
+  dll_t<T> even_list;
+  dll_node_t<T>* aux = get_head();  // Posicionar aux en primer elemento
+  while (aux != NULL && aux->get_next() != NULL) {  // Recorrer toda la lista
+    aux = aux->get_next();  // Posicionar aux en par
+    dll_node_t<T>* next = aux->get_next();  // Posicionar next en sig. impar
+    even_list.push_back(erase(aux));  // Mover el aux
+    aux = next;  // Posicionar aux en siguiente impar
+  }
+  return even_list;  // Retornar lista de impares
 }
 
 #endif  // DLLT_H_

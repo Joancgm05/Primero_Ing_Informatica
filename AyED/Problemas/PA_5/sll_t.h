@@ -85,8 +85,7 @@ template <class T> sll_node_t<T>* sll_t<T>::pop_front(void) {
   return aux;
 }
 
-template <class T> void sll_t<T>::insert_after(sll_node_t<T>* prev,
-					       sll_node_t<T>* n) {
+template <class T> void sll_t<T>::insert_after(sll_node_t<T>* prev, sll_node_t<T>* n) {
   assert(prev != NULL && n != NULL);
 
   n->set_next(prev->get_next());
