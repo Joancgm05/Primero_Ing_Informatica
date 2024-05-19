@@ -18,7 +18,7 @@ class sll_node_t {
  public:
   // constructores
   sll_node_t(void) : data_(), next_(NULL) {}  // constructor por defecto
-  sll_node_t(const T& data) : data_(data), next_(NULL) {} // constructor
+  sll_node_t(const T& data) : data_(data), next_(NULL) {} // constructor 
 
   // destructor
   ~sll_node_t(void) {};

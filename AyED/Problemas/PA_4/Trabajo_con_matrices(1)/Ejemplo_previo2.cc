@@ -11,7 +11,7 @@ int main() {
 
   cout << "Elementos de la submatriz triangular inferior sin diagonal: " << endl;
   for (int i = 1; i < m; i++) {
-    for (int j = 0; j <= i - 1; j++)
+    for (int j = 0; j < i ; j++)
       cout << C[i][j] << " ";
     cout << endl;
 }

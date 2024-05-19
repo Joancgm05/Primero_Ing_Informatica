@@ -1,3 +1,5 @@
+#include <iostream>
+
 int main() {
   const int n{10};
   int A[n] = {5, 3, 2, 1, 5, 1, 4, 2, 1, 6};
@@ -9,4 +11,8 @@ int main() {
     else {
       impares++;
     }
+
+std::cout << pares << " " << impares << '\n';
+
+return 0;
 }

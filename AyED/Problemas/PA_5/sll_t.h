@@ -26,18 +26,18 @@ class sll_t {
   ~sll_t(void);
 
   // getters
-  sll_node_t<T>* get_head(void) const { return head_; };
+  sll_node_t<T>* get_head(void) const { return head_; }; // metodo para obtener el primer nodo de la lista
   
-  bool empty(void) const;
+  bool empty(void) const; // metodo para comprobar si la lista esta vacia
 
   // operaciones
-  void push_front(sll_node_t<T>*);
-  sll_node_t<T>* pop_front(void);
+  void push_front(sll_node_t<T>*); // metodo para insertar un nodo al principio de la lista
+  sll_node_t<T>* pop_front(void); // metodo para eliminar el primer nodo de la lista
 
-  void insert_after(sll_node_t<T>*, sll_node_t<T>*);
-  sll_node_t<T>* erase_after(sll_node_t<T>*);
+  void insert_after(sll_node_t<T>*, sll_node_t<T>*); // metodo para insertar un nodo despues de otro nodo
+  sll_node_t<T>* erase_after(sll_node_t<T>*); // metodo para eliminar un nodo despues de otro nodo
 
-  sll_node_t<T>* search(const T&) const;
+  sll_node_t<T>* search(const T&) const; // metodo para buscar un nodo en la lista
 
   // E/S
   std::ostream& write(std::ostream& = std::cout) const;
@@ -136,7 +136,7 @@ template <class T> T sll_t<T>::remove_last(void) {
   }
   sll_node_t<T>* node;
   if (prev == NULL)  // Sí último es primero usar pop_front, sino erase_after
-    node = pop_front();
+    node = pop_front(); 
   else
     node = erase_after(prev);
   T dato = node->get_data();
