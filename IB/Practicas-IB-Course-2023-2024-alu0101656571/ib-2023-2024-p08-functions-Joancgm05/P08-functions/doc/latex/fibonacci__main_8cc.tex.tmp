@@ -1,0 +1,66 @@
+\hypertarget{fibonacci__main_8cc}{}\doxysubsection{fibonacci\+\_\+main.\+cc File Reference}
+\label{fibonacci__main_8cc}\index{fibonacci\_main.cc@{fibonacci\_main.cc}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include \char`\"{}fibonacci\+\_\+sum.\+h\char`\"{}}\newline
+Include dependency graph for fibonacci\+\_\+main.\+cc\+:
+% FIG 0
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{fibonacci__main_8cc_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Universidad de La Laguna Escuela Superior de Ingeniería y Tecnología Grado en Ingeniería Informática Informática Básica. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Function Documentation}
+\mbox{\Hypertarget{fibonacci__main_8cc_a0ddf1224851353fc92bfbff6f499fa97}\label{fibonacci__main_8cc_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{fibonacci\_main.cc@{fibonacci\_main.cc}!main@{main}}
+\index{main@{main}!fibonacci\_main.cc@{fibonacci\_main.cc}}
+\doxyparagraph{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Universidad de La Laguna Escuela Superior de Ingeniería y Tecnología Grado en Ingeniería Informática Informática Básica. 
+
+\begin{DoxyAuthor}{Author}
+F. de Sande 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+7.\+nov.\+2020
+\end{DoxyDate}
+Cada nuevo término de la serie de Fibonacci se genera sumando los dos anteriores. Comenzando con 0 y 1, los primeros 10 términos serán\+: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34 Desarrolle en C++ un programa que calcule la suma de todos los términos de valor par de la serie que sean menores que 1000. \begin{DoxySeeAlso}{See also}
+\href{https://docs.google.com/document/d/1-3hTIVf8tPrbn9u0vs0Cm2IGyX1XBgv8hReVU0KOSUQ/edit?usp=sharing}{\texttt{ https\+://docs.\+google.\+com/document/d/1-\/3h\+T\+I\+Vf8t\+Prbn9u0vs0\+Cm2\+I\+Gy\+X1\+X\+Bgv8h\+Re\+V\+U0\+K\+O\+S\+U\+Q/edit?usp=sharing}} 
+
+stoi \href{http://www.cplusplus.com/reference/string/stoi/}{\texttt{ http\+://www.\+cplusplus.\+com/reference/string/stoi/}} An Object Oriented Version of the program\+: 
+
+\href{https://stackoverflow.com/questions/21360694/sum-of-even-fibonacci-numbers-under-1000}{\texttt{ https\+://stackoverflow.\+com/questions/21360694/sum-\/of-\/even-\/fibonacci-\/numbers-\/under-\/1000}} Main function 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argc} & Number of command line parameters \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & Vector containing (char$\ast$) the parameters \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 29 of file fibonacci\+\_\+main.\+cc.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{29                                  \{}
+\DoxyCodeLine{30   \mbox{\hyperlink{fibonacci__sum_8cc_aeac332c082069f54e8769d311dd2049d}{Usage}}(argc, argv);}
+\DoxyCodeLine{31   std::string limit = argv[1];}
+\DoxyCodeLine{32   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} kLimit = stoi(limit);}
+\DoxyCodeLine{33   std::cout << \textcolor{stringliteral}{"Sum: "} << \mbox{\hyperlink{fibonacci__sum_8cc_ac425b2614dbfd00399b158067d4015d2}{FibonacciSum}}(kLimit) << std::endl; }
+\DoxyCodeLine{34   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{35 \}}
+
+\end{DoxyCode}
+
+
+References Fibonacci\+Sum(), and Usage().
+
+Here is the call graph for this function\+:
+% FIG 1
