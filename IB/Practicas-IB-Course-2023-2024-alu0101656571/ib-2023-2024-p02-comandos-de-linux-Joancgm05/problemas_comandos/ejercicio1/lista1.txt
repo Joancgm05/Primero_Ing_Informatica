@@ -1,5 +1,0 @@
-.
-├── fichero1.txt
-└── lista1.txt
-
-0 directories, 2 files
