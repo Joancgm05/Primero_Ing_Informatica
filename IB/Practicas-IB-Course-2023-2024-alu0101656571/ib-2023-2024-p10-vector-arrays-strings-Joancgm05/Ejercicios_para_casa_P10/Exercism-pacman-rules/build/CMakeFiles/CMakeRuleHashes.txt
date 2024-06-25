@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+68bcfb446542187b6bf8810ed5efb9ce CMakeFiles/test_pacman-rules

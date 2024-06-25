@@ -1,0 +1,4 @@
+/home/usuario/exercism/cpp/pacman-rules/build/CMakeFiles/edit_cache.dir
+/home/usuario/exercism/cpp/pacman-rules/build/CMakeFiles/rebuild_cache.dir
+/home/usuario/exercism/cpp/pacman-rules/build/CMakeFiles/test_pacman-rules.dir
+/home/usuario/exercism/cpp/pacman-rules/build/CMakeFiles/pacman-rules.dir

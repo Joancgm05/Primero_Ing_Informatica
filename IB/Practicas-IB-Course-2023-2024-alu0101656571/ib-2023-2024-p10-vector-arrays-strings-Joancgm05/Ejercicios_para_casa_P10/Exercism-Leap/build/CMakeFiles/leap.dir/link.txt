@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/leap.dir/leap_test.cpp.o CMakeFiles/leap.dir/leap.cpp.o CMakeFiles/leap.dir/test/tests-main.cpp.o  -o leap 
